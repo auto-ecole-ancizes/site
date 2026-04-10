@@ -1,0 +1,2143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Auto-École des Ancizes - Votre permis de conduire à Les Ancizes-Comps. Permis B, conduite accompagnée, code de la route. Formateurs certifiés.">
+    <title>Auto-École des Ancizes | Permis de Conduire — Les Ancizes-Comps</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Caveat:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
+    <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+        --green-light: #b5d5b0;
+        --green-med:   #5a9e6f;
+        --green-dark:  #1d5c48;
+        --green-darker:#0e2d22;
+        --orange:      #e8572a;
+        --orange-dark: #c94520;
+        --cream:       #e8f2e5;
+        --white:       #f5faf4;
+        --text-dark:   #162920;
+        --text-mid:    #3a524a;
+        --text-light:  #6a8078;
+        --radius:      12px;
+        --radius-lg:   20px;
+        --shadow-sm:   0 2px 16px rgba(0,0,0,0.07);
+        --shadow-md:   0 8px 32px rgba(0,0,0,0.11);
+        --shadow-lg:   0 20px 60px rgba(0,0,0,0.16);
+        --t:           all 0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        color: var(--text-dark);
+        overflow-x: hidden;
+        background-color: #e8f4e4;
+        background-image:
+            radial-gradient(circle, rgba(29,92,72,0.1) 1px, transparent 1px);
+        background-size: 24px 24px;
+    }
+
+    /* ── NAVBAR ───────────────────────────── */
+    #navbar {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        z-index: 1000;
+        padding: 22px 0;
+        transition: var(--t);
+    }
+
+    #navbar.scrolled {
+        background: rgba(14,45,34,0.97);
+        backdrop-filter: blur(12px);
+        padding: 12px 0;
+        box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+    }
+
+    .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .nav-logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+    }
+
+    .nav-logo-icon {
+        width: 46px; height: 46px;
+        border-radius: 12px;
+        overflow: hidden;
+        display: flex; align-items: center; justify-content: center;
+        transition: var(--t);
+        flex-shrink: 0;
+    }
+
+    .nav-logo-icon img {
+        width: 100%; height: 100%;
+        object-fit: cover;
+    }
+
+    .nav-logo:hover .nav-logo-icon { transform: rotate(-6deg) scale(1.08); }
+
+    .nav-logo-text { line-height: 1.15; }
+    .nav-logo-text .line1 { display: block; font-size: 10px; font-weight: 500; color: var(--green-light); letter-spacing: 2px; text-transform: uppercase; }
+    .nav-logo-text .line2 { display: block; font-size: 15px; font-weight: 700; color: white; }
+
+    .nav-menu { display: flex; list-style: none; gap: 4px; align-items: center; }
+
+    .nav-menu a {
+        text-decoration: none;
+        color: rgba(255,255,255,0.82);
+        font-size: 14px; font-weight: 500;
+        padding: 9px 15px;
+        border-radius: 8px;
+        transition: var(--t);
+    }
+
+    .nav-menu a:hover { color: white; background: rgba(255,255,255,0.1); }
+
+    .nav-cta {
+        background: var(--orange) !important;
+        color: white !important;
+        border-radius: 50px !important;
+        font-weight: 600 !important;
+    }
+
+    .nav-cta:hover {
+        background: var(--orange-dark) !important;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(232,87,42,0.4) !important;
+    }
+
+    .hamburger {
+        display: none;
+        flex-direction: column; gap: 5px;
+        cursor: pointer; padding: 6px;
+        background: none; border: none;
+    }
+
+    .hamburger span {
+        width: 24px; height: 2px;
+        background: white; border-radius: 2px;
+        transition: var(--t);
+        display: block;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: translateX(-10px); }
+    .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+
+    /* ── HERO ─────────────────────────────── */
+    .hero {
+        min-height: 100vh;
+        background: var(--green-darker);
+        position: relative;
+        display: flex; align-items: center;
+        overflow: hidden;
+    }
+
+    .hero::before {
+        content: '';
+        position: absolute; inset: 0;
+        background:
+            radial-gradient(ellipse at 15% 55%, rgba(29,92,72,0.65) 0%, transparent 55%),
+            radial-gradient(ellipse at 85% 15%, rgba(232,87,42,0.18) 0%, transparent 50%),
+            radial-gradient(ellipse at 65% 85%, rgba(29,92,72,0.35) 0%, transparent 50%);
+        animation: bgPulse 9s ease-in-out infinite alternate;
+    }
+
+    @keyframes bgPulse {
+        0%   { opacity: 0.8; transform: scale(1); }
+        100% { opacity: 1;   transform: scale(1.04); }
+    }
+
+    /* Ligne tiretée bas du hero */
+    .hero::after {
+        content: '';
+        position: absolute;
+        bottom: 0; left: 0; right: 0;
+        height: 3px;
+        background: repeating-linear-gradient(90deg, var(--orange) 0, var(--orange) 50px, transparent 50px, transparent 84px);
+        animation: roadScroll 2s linear infinite;
+    }
+
+    .hero-orb {
+        position: absolute;
+        border-radius: 50%;
+        pointer-events: none;
+    }
+
+    .hero-orb-1 {
+        width: 700px; height: 700px;
+        border: 1px solid rgba(181,213,176,0.08);
+        top: -250px; right: -150px;
+        animation: floatOrb 12s ease-in-out infinite;
+    }
+
+    .hero-orb-2 {
+        width: 450px; height: 450px;
+        border: 1px solid rgba(232,87,42,0.1);
+        bottom: -150px; left: -80px;
+        animation: floatOrb 16s ease-in-out infinite reverse;
+    }
+
+    .hero-orb-3 {
+        width: 220px; height: 220px;
+        background: rgba(29,92,72,0.18);
+        top: 28%; right: 12%;
+        animation: floatOrb 9s ease-in-out infinite 2s;
+    }
+
+    @keyframes floatOrb {
+        0%,100% { transform: translateY(0) rotate(0deg); }
+        50%     { transform: translateY(-28px) rotate(8deg); }
+    }
+
+    .hero-container {
+        max-width: 1200px; margin: 0 auto;
+        padding: 130px 30px 100px;
+        display: grid; grid-template-columns: 1fr 1fr;
+        gap: 60px; align-items: center;
+        position: relative; z-index: 1;
+    }
+
+    .hero-badge {
+        display: inline-flex; align-items: center; gap: 8px;
+        background: rgba(232,87,42,0.14);
+        border: 1px solid rgba(232,87,42,0.38);
+        color: #f08060;
+        font-size: 11px; font-weight: 600;
+        letter-spacing: 1.5px; text-transform: uppercase;
+        padding: 8px 18px; border-radius: 50px;
+        margin-bottom: 26px; width: fit-content;
+        animation: fadeSlideUp 0.7s ease both;
+    }
+
+    .hero-title {
+        font-size: clamp(36px,5vw,62px);
+        font-weight: 800; color: white;
+        line-height: 1.08; margin-bottom: 26px;
+        animation: fadeSlideUp 0.7s ease 0.15s both;
+    }
+
+    .hero-title .hl {
+        color: var(--orange);
+        position: relative; display: inline-block;
+    }
+
+    .hero-title .hl::after {
+        content: '';
+        position: absolute;
+        bottom: 0; left: 0; right: 0;
+        height: 3px;
+        background: var(--orange);
+        border-radius: 2px; opacity: 0.35;
+    }
+
+    .hero-subtitle {
+        font-size: 16px; color: rgba(255,255,255,0.68);
+        line-height: 1.75; margin-bottom: 42px;
+        font-weight: 300; max-width: 480px;
+        animation: fadeSlideUp 0.7s ease 0.3s both;
+    }
+
+    @keyframes fadeSlideUp {
+        from { opacity: 0; transform: translateY(28px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-buttons {
+        display: flex; gap: 16px; flex-wrap: wrap;
+        animation: fadeSlideUp 0.7s ease 0.45s both;
+    }
+
+    .btn-primary {
+        display: inline-flex; align-items: center; gap: 10px;
+        background: var(--orange); color: white;
+        padding: 16px 32px; border-radius: 50px;
+        font-weight: 600; font-size: 14px;
+        text-decoration: none; transition: var(--t);
+        box-shadow: 0 6px 28px rgba(232,87,42,0.38);
+        border: none; cursor: pointer; font-family: inherit;
+    }
+
+    .btn-primary:hover {
+        background: var(--orange-dark);
+        transform: translateY(-3px);
+        box-shadow: 0 12px 40px rgba(232,87,42,0.48);
+    }
+
+    .btn-secondary {
+        display: inline-flex; align-items: center; gap: 10px;
+        background: transparent; color: white;
+        padding: 16px 32px; border-radius: 50px;
+        font-weight: 600; font-size: 14px;
+        text-decoration: none; transition: var(--t);
+        border: 2px solid rgba(255,255,255,0.28);
+    }
+
+    .btn-secondary:hover {
+        border-color: white;
+        background: rgba(255,255,255,0.09);
+        transform: translateY(-3px);
+    }
+
+    .hero-image-wrap {
+        display: flex; justify-content: center; align-items: center;
+        position: relative;
+        animation: fadeSlideUp 0.7s ease 0.25s both;
+    }
+
+    .hero-glow {
+        position: absolute;
+        width: 420px; height: 420px;
+        background: radial-gradient(circle, rgba(29,92,72,0.5) 0%, transparent 70%);
+        border-radius: 50%;
+        animation: glowPulse 5s ease-in-out infinite;
+    }
+
+    @keyframes glowPulse {
+        0%,100% { transform: scale(1);   opacity: 0.5; }
+        50%     { transform: scale(1.12); opacity: 0.85; }
+    }
+
+    .hero-logo-img {
+        width: 360px; height: 360px;
+        object-fit: contain;
+        border-radius: 24px;
+        position: relative; z-index: 1;
+        filter: drop-shadow(0 24px 64px rgba(0,0,0,0.45));
+    }
+
+    .hero-scroll {
+        position: absolute;
+        bottom: 36px; left: 50%;
+        transform: translateX(-50%);
+        display: flex; flex-direction: column; align-items: center; gap: 6px;
+        color: rgba(255,255,255,0.35);
+        font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+        animation: scrollBounce 2.2s ease-in-out infinite;
+        z-index: 2;
+    }
+
+    .hero-scroll i { font-size: 16px; }
+
+    @keyframes scrollBounce {
+        0%,100% { transform: translateX(-50%) translateY(0); }
+        50%     { transform: translateX(-50%) translateY(9px); }
+    }
+
+    /* ── STATS ────────────────────────────── */
+    .stats-bar {
+        background: var(--green-dark);
+        padding: 44px 0;
+    }
+
+    .stats-container {
+        max-width: 1200px; margin: 0 auto;
+        padding: 0 30px;
+        display: flex; justify-content: center; gap: 0;
+        gap: 20px;
+    }
+
+    .stat-item {
+        width: 260px;
+        text-align: center; color: white;
+        border-right: 1px solid rgba(255,255,255,0.12);
+        padding: 0 10px;
+    }
+
+    .stat-item:last-child { border-right: none; }
+
+    .stat-number {
+        font-size: 44px; font-weight: 800;
+        line-height: 1; margin-bottom: 6px;
+    }
+
+    .stat-number em { color: var(--orange); font-style: normal; }
+
+    .stat-label {
+        font-size: 12px; font-weight: 400;
+        color: rgba(255,255,255,0.58);
+        letter-spacing: 0.4px;
+    }
+
+    /* ── SECTION COMMONS ──────────────────── */
+    .section-wrap {
+        max-width: 1200px; margin: 0 auto; padding: 0 30px;
+    }
+
+    .section-header { text-align: center; margin-bottom: 64px; }
+
+    .section-tag {
+        display: inline-flex; align-items: center; gap: 10px;
+        font-size: 11px; font-weight: 700;
+        letter-spacing: 2px; text-transform: uppercase;
+        color: var(--orange); margin-bottom: 14px;
+    }
+
+    .section-tag::before,
+    .section-tag::after {
+        content: ''; width: 28px; height: 2px;
+        background: var(--orange); border-radius: 2px;
+    }
+
+    .section-title {
+        font-size: clamp(28px,4vw,44px);
+        font-weight: 800; color: var(--text-dark);
+        line-height: 1.18; margin-bottom: 18px;
+    }
+
+    .section-title .accent { color: var(--green-dark); }
+
+    .section-subtitle {
+        font-size: 15px; color: var(--text-light);
+        max-width: 540px; margin: 0 auto; line-height: 1.75;
+    }
+
+    /* ── ABOUT ────────────────────────────── */
+    .about { padding: 110px 0; background: linear-gradient(160deg, #d8edcf 0%, #cce5c2 100%); }
+
+    .about-grid {
+        display: grid; grid-template-columns: 1fr 1fr;
+        gap: 80px; align-items: center;
+    }
+
+    .about-img-wrap { position: relative; overflow: visible; }
+
+    .about-img-wrap img {
+        width: 100%; border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-lg);
+        transition: transform 0.6s ease;
+    }
+
+    .about-img-wrap:hover img { transform: scale(1.02); }
+
+    .about-badge {
+        position: absolute;
+        bottom: -22px; right: -22px;
+        background: var(--orange); color: white;
+        padding: 22px 26px; border-radius: var(--radius);
+        box-shadow: var(--shadow-md); text-align: center;
+        min-width: 110px;
+    }
+
+    .about-badge strong { display: block; font-size: 34px; font-weight: 800; line-height: 1; }
+    .about-badge span   { font-size: 11px; font-weight: 500; opacity: 0.9; }
+
+    .about-content .section-header { text-align: left; }
+
+    .about-text {
+        font-size: 14px; color: var(--text-mid);
+        line-height: 1.85; margin-bottom: 24px;
+    }
+
+    .about-checklist {
+        list-style: none; display: flex; flex-direction: column;
+        gap: 13px; margin-bottom: 40px;
+    }
+
+    .about-checklist li {
+        display: flex; align-items: flex-start; gap: 12px;
+        font-size: 14px; color: var(--text-mid);
+    }
+
+    .about-checklist li i {
+        color: var(--green-dark); font-size: 15px;
+        margin-top: 2px; flex-shrink: 0;
+    }
+
+    .team-row {
+        display: flex; gap: 14px; margin-top: 32px; flex-wrap: wrap;
+    }
+
+    .team-chip {
+        display: flex; align-items: center; gap: 10px;
+        background: white; border: 2px solid var(--border, #e0ebe0);
+        border-radius: 50px; padding: 10px 20px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    }
+
+    .team-chip-avatar {
+        width: 34px; height: 34px; border-radius: 50%;
+        background: linear-gradient(135deg, var(--green-darker), var(--green-dark));
+        display: flex; align-items: center; justify-content: center;
+        font-size: 13px; font-weight: 700; color: white; flex-shrink: 0;
+    }
+
+    .team-chip-name { font-size: 14px; font-weight: 600; color: var(--text-dark); }
+    .team-chip-role { font-size: 11px; color: var(--text-light); }
+
+    /* ── FORMATIONS ───────────────────────── */
+    .formations {
+        padding: 110px 0;
+        background: linear-gradient(180deg, #e8f4e4 0%, #d8edcf 100%);
+        background-image:
+            radial-gradient(circle, rgba(29,92,72,0.09) 1px, transparent 1px),
+            linear-gradient(180deg, #e8f4e4 0%, #d8edcf 100%);
+        background-size: 24px 24px, 100% 100%;
+    }
+
+    .formations-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 28px;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 24px;
+    }
+
+    .swiper-nav-btn {
+        position: absolute;
+        top: 50%; transform: translateY(-50%);
+        width: 48px; height: 48px;
+        background: var(--orange); color: white;
+        border: none; border-radius: 12px;
+        font-size: 17px; cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+        transition: var(--t); z-index: 10;
+        box-shadow: 0 4px 20px rgba(232,87,42,0.38);
+    }
+
+    .swiper-nav-btn:hover {
+        background: var(--orange-dark);
+        transform: translateY(-50%) scale(1.08);
+        box-shadow: 0 8px 28px rgba(232,87,42,0.5);
+    }
+
+    .swiper-nav-btn.prev { left: 0; }
+    .swiper-nav-btn.next { right: 0; }
+
+    .formation-card {
+        background: #eef7eb;
+        border: 2px solid #e4ece4;
+        border-radius: var(--radius-lg);
+        padding: 38px 28px;
+        transition: var(--t); position: relative;
+        overflow: hidden; cursor: default;
+        height: 100%;
+        display: flex; flex-direction: column;
+    }
+
+    .formation-card::after {
+        content: '';
+        position: absolute;
+        bottom: 0; left: 0; right: 0; height: 4px;
+        background: linear-gradient(90deg, var(--green-dark), var(--orange));
+        transform: scaleX(0); transform-origin: left;
+        transition: transform 0.45s ease;
+    }
+
+    .formation-card:hover {
+        border-color: transparent;
+        box-shadow: var(--shadow-lg);
+        transform: translateY(-9px);
+    }
+
+    .formation-card:hover::after { transform: scaleX(1); }
+
+    .f-icon {
+        width: 66px; height: 66px;
+        background: linear-gradient(135deg, var(--green-darker), var(--green-dark));
+        border-radius: 16px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 26px; color: white;
+        margin-bottom: 26px;
+        transition: var(--t);
+        box-shadow: 0 6px 20px rgba(14,45,34,0.25);
+    }
+
+    .formation-card:hover .f-icon {
+        background: linear-gradient(135deg, var(--orange-dark), var(--orange));
+        transform: rotate(-6deg) scale(1.1);
+        box-shadow: 0 8px 24px rgba(232,87,42,0.35);
+    }
+
+    .formation-card h3 {
+        font-size: 17px; font-weight: 700;
+        color: var(--text-dark); margin-bottom: 12px;
+    }
+
+    .formation-card p {
+        font-size: 13px; color: var(--text-light);
+        line-height: 1.75; margin-bottom: 22px;
+        flex: 1;
+    }
+
+    .f-link {
+        display: inline-flex; align-items: center; gap: 6px;
+        font-size: 13px; font-weight: 600;
+        color: var(--green-dark); text-decoration: none;
+        transition: var(--t);
+    }
+
+    .f-link:hover { gap: 10px; color: var(--orange); }
+
+    /* ── TARIFS ───────────────────────────── */
+    .tarifs { padding: 110px 0; background: linear-gradient(160deg, #cce5c2 0%, #c0deb4 100%); }
+
+    /* Carousel tarifs */
+    .tarifs-swiper-wrap {
+        max-width: 1100px; margin: 0 auto;
+        padding: 0 64px;
+        position: relative;
+    }
+
+    .tarifs-swiper { overflow: hidden; }
+    .tarifs-swiper .swiper-slide { height: auto; }
+
+    .tarif-card {
+        background: #eef7eb; border-radius: var(--radius-lg);
+        padding: 44px 36px;
+        box-shadow: var(--shadow-sm);
+        transition: var(--t); position: relative; overflow: hidden;
+        height: 100%; display: flex; flex-direction: column;
+    }
+
+    .tarif-card:hover {
+        transform: translateY(-9px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .tarif-card.featured {
+        background: linear-gradient(150deg, var(--green-darker) 0%, var(--green-dark) 100%);
+        padding: 48px 36px;
+        transform: none;
+    }
+
+    .tarif-card.featured:hover { transform: translateY(-9px); }
+
+    .feat-badge {
+        position: absolute; top: 20px; right: 20px;
+        background: var(--orange); color: white;
+        font-size: 10px; font-weight: 700;
+        letter-spacing: 1.2px; text-transform: uppercase;
+        padding: 5px 13px; border-radius: 50px;
+    }
+
+    .tarif-tag {
+        font-size: 11px; font-weight: 700; letter-spacing: 2px;
+        text-transform: uppercase; color: var(--orange);
+        margin-bottom: 8px;
+    }
+
+    .tarif-card.featured .tarif-tag { color: rgba(255,255,255,0.6); }
+
+    .tarif-title {
+        font-size: 21px; font-weight: 700;
+        color: var(--text-dark); margin-bottom: 22px;
+    }
+
+    .tarif-card.featured .tarif-title { color: white; }
+
+    .tarif-price {
+        display: flex; align-items: flex-end; gap: 4px;
+        margin-bottom: 28px; padding-bottom: 28px;
+        border-bottom: 1px solid #e4ece4;
+    }
+
+    .tarif-card.featured .tarif-price { border-color: rgba(255,255,255,0.14); }
+
+    .price-from  { font-size: 12px; color: var(--text-light); margin-bottom: 12px; }
+    .price-num   { font-size: 52px; font-weight: 800; color: var(--text-dark); line-height: 1; }
+    .price-euro  { font-size: 26px; font-weight: 700; color: var(--text-mid); margin-bottom: 10px; }
+
+    .tarif-card.featured .price-from  { color: rgba(255,255,255,0.45); }
+    .tarif-card.featured .price-num   { color: white; }
+    .tarif-card.featured .price-euro  { color: rgba(255,255,255,0.65); }
+
+    .tarif-list {
+        list-style: none; display: flex; flex-direction: column;
+        gap: 13px; margin-bottom: 32px; flex: 1;
+    }
+
+    .tarif-list li {
+        display: flex; align-items: center; gap: 10px;
+        font-size: 13px; color: var(--text-mid);
+    }
+
+    .tarif-card.featured .tarif-list li { color: rgba(255,255,255,0.8); }
+
+    .tarif-list li i { color: var(--green-dark); font-size: 14px; }
+    .tarif-card.featured .tarif-list li i { color: var(--orange); }
+
+    .btn-enroll {
+        display: block; width: 100%; padding: 14px;
+        border-radius: 50px; font-weight: 600; font-size: 14px;
+        text-align: center; text-decoration: none;
+        transition: var(--t);
+        border: 2px solid var(--green-dark);
+        color: var(--green-dark); background: transparent;
+        font-family: inherit; cursor: pointer;
+    }
+
+    .btn-enroll:hover {
+        background: var(--green-dark); color: white;
+    }
+
+    .tarif-card.featured .btn-enroll {
+        background: var(--orange); border-color: var(--orange);
+        color: white; box-shadow: 0 8px 26px rgba(232,87,42,0.38);
+    }
+
+    .tarif-card.featured .btn-enroll:hover {
+        background: var(--orange-dark); border-color: var(--orange-dark);
+    }
+
+    .tarif-extras {
+        max-width: 1100px; margin: 40px auto 0;
+        padding: 0 30px;
+    }
+
+    .tarif-extras-inner {
+        background: var(--green-darker);
+        border-radius: var(--radius-lg);
+        padding: 28px 36px;
+        display: flex; align-items: center;
+        justify-content: space-between; gap: 24px; flex-wrap: wrap;
+    }
+
+    .tarif-extras-title {
+        font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.9);
+        display: flex; align-items: center; gap: 10px;
+    }
+
+    .tarif-extras-title i { color: var(--orange); font-size: 16px; flex-shrink: 0; }
+
+    .tarif-extras-prices {
+        display: flex; gap: 28px; flex-wrap: wrap;
+    }
+
+    .tarif-extras-prices span {
+        font-size: 14px; color: rgba(255,255,255,0.7);
+        white-space: nowrap;
+    }
+
+    .tarif-extras-prices strong { color: var(--orange); }
+
+    .tarif-note {
+        text-align: center; margin-top: 24px;
+        font-size: 13px; color: var(--text-light);
+    }
+
+    .tarif-note a { color: var(--green-dark); text-decoration: none; }
+    .tarif-note a:hover { text-decoration: underline; }
+
+    /* ── FINANCEMENTS ─────────────────────── */
+    .financements {
+        padding: 110px 0;
+        background: linear-gradient(140deg, var(--green-darker) 0%, var(--green-dark) 100%);
+    }
+
+    .financements .section-tag { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.85); }
+    .financements .section-title { color: white; }
+    .financements .section-subtitle { color: rgba(255,255,255,0.6); }
+
+    .fin-grid {
+        display: flex; justify-content: center;
+        gap: 24px; flex-wrap: wrap;
+    }
+
+    .fin-card { width: 340px; max-width: 100%; }
+
+    .fin-card {
+        background: rgba(255,255,255,0.08);
+        border: 1px solid rgba(255,255,255,0.15);
+        border-radius: var(--radius-lg);
+        padding: 36px 30px;
+        display: flex; flex-direction: column; gap: 14px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+        transition: var(--t);
+    }
+
+    .fin-card:hover {
+        transform: translateY(-7px);
+        background: rgba(255,255,255,0.13);
+        box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    }
+
+    .fin-icon {
+        width: 56px; height: 56px;
+        background: linear-gradient(135deg, var(--orange-dark), var(--orange));
+        border-radius: 14px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 22px; color: white;
+        transition: var(--t); flex-shrink: 0;
+    }
+
+    .fin-card:hover .fin-icon {
+        transform: rotate(-5deg) scale(1.08);
+    }
+
+    .fin-card h3 {
+        font-size: 17px; font-weight: 700; color: white;
+    }
+
+    .fin-card p {
+        font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.75;
+    }
+
+    .fin-note {
+        max-width: 1200px; margin: 40px auto 0;
+        padding: 0 30px; text-align: center;
+    }
+
+    .fin-note p {
+        display: inline-flex; align-items: center; gap: 10px;
+        background: rgba(255,255,255,0.08);
+        border: 1px solid rgba(255,255,255,0.15);
+        border-radius: 50px; padding: 12px 24px;
+        font-size: 13px; font-style: italic; color: rgba(255,255,255,0.7);
+    }
+
+    .fin-note i { color: var(--orange); }
+
+    /* ── WHY US ───────────────────────────── */
+    .why-us {
+        padding: 110px 0;
+        background: linear-gradient(180deg, #d8edcf 0%, #cce5c2 100%);
+        background-image:
+            radial-gradient(circle, rgba(29,92,72,0.09) 1px, transparent 1px),
+            linear-gradient(180deg, #d8edcf 0%, #cce5c2 100%);
+        background-size: 24px 24px, 100% 100%;
+    }
+
+    .why-grid {
+        display: grid; grid-template-columns: repeat(3,1fr);
+        gap: 28px;
+    }
+
+    .why-card {
+        display: flex; flex-direction: column; gap: 16px;
+        padding: 36px; border-radius: var(--radius-lg);
+        background: #eef7eb;
+        transition: var(--t);
+    }
+
+    .why-card:hover {
+        background: var(--green-darker);
+        transform: translateY(-7px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .why-card-icon {
+        width: 58px; height: 58px; background: #d4ecce;
+        border-radius: 14px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 22px; color: var(--green-dark);
+        box-shadow: var(--shadow-sm);
+        transition: var(--t); flex-shrink: 0;
+    }
+
+    .why-card:hover .why-card-icon {
+        background: var(--orange); color: white;
+        transform: rotate(-6deg);
+    }
+
+    .why-card h3 {
+        font-size: 16px; font-weight: 700;
+        color: var(--text-dark); transition: color 0.3s;
+    }
+
+    .why-card:hover h3 { color: white; }
+
+    .why-card p {
+        font-size: 13px; color: var(--text-light);
+        line-height: 1.75; transition: color 0.3s;
+    }
+
+    .why-card:hover p { color: rgba(255,255,255,0.62); }
+
+    /* ── TESTIMONIALS ─────────────────────── */
+    .testimonials {
+        padding: 110px 0;
+        background: linear-gradient(180deg, #d8edcf 0%, #e8f4e4 100%);
+        background-image:
+            radial-gradient(circle, rgba(29,92,72,0.07) 1px, transparent 1px),
+            linear-gradient(180deg, #d8edcf 0%, #e8f4e4 100%);
+        background-size: 24px 24px, 100% 100%;
+        position: relative; overflow: hidden;
+    }
+
+    .testimonials .section-title { color: var(--text-dark); }
+    .testimonials .section-subtitle { color: var(--text-mid); }
+
+    .swiper-outer {
+        max-width: 1200px; margin: 0 auto;
+        padding: 0 30px;
+    }
+
+    .testi-swiper { padding-bottom: 55px !important; }
+
+    .testi-card {
+        background: rgba(255,255,255,0.07);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: var(--radius-lg);
+        padding: 36px;
+        height: 100%;
+        transition: var(--t);
+    }
+
+    .testi-card:hover {
+        background: rgba(255,255,255,0.12);
+        transform: translateY(-5px);
+    }
+
+    .testi-stars { display: flex; gap: 4px; margin-bottom: 16px; }
+    .testi-stars i { color: #ffd700; font-size: 13px; }
+
+    .testi-text {
+        font-size: 14px; color: rgba(255,255,255,0.78);
+        line-height: 1.85; margin-bottom: 26px; font-style: italic;
+    }
+
+    .testi-author { display: flex; align-items: center; gap: 13px; }
+
+    .testi-avatar {
+        width: 46px; height: 46px; border-radius: 50%;
+        background: var(--orange);
+        display: flex; align-items: center; justify-content: center;
+        font-weight: 700; font-size: 17px; color: white; flex-shrink: 0;
+    }
+
+    .testi-name   { font-size: 14px; font-weight: 600; color: white; }
+    .testi-detail { font-size: 12px; color: rgba(255,255,255,0.42); margin-top: 2px; }
+
+    .swiper-pagination-bullet         { background: rgba(255,255,255,0.38) !important; }
+    .swiper-pagination-bullet-active  { background: var(--orange) !important; }
+
+    /* ── CONTACT ──────────────────────────── */
+    .contact { padding: 110px 0; background: linear-gradient(160deg, #c0deb4 0%, #b4d8a6 100%); }
+
+    .contact-grid {
+        display: grid; grid-template-columns: 1fr 1.4fr;
+        gap: 56px; align-items: start;
+    }
+
+    .contact-info {
+        background: var(--green-darker); color: white;
+        border-radius: var(--radius-lg); padding: 46px;
+        position: sticky; top: 100px;
+    }
+
+    .contact-info h3 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+    .contact-info > p { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 36px; line-height: 1.6; }
+
+    .ci-item {
+        display: flex; gap: 16px;
+        align-items: flex-start; margin-bottom: 28px;
+    }
+
+    .ci-icon {
+        width: 44px; height: 44px; flex-shrink: 0;
+        background: rgba(255,255,255,0.09);
+        border-radius: 10px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 15px; color: var(--orange);
+    }
+
+    .ci-text strong { display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.5px; margin-bottom: 4px; }
+    .ci-text span   { font-size: 13px; color: rgba(255,255,255,0.62); line-height: 1.55; }
+    .ci-text a { color: rgba(255,255,255,0.62); text-decoration: none; }
+    .ci-text a:hover { color: var(--orange); }
+
+    .ci-hours {
+        margin-top: 30px; padding-top: 26px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .ci-hours h4 {
+        font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+        text-transform: uppercase; color: var(--orange); margin-bottom: 16px;
+    }
+
+    .ci-hours-row {
+        display: flex; justify-content: space-between;
+        font-size: 12px; color: rgba(255,255,255,0.55);
+        padding: 4px 0;
+    }
+
+    .ci-hours-row strong { color: rgba(255,255,255,0.88); }
+
+    /* Form */
+    .contact-form-box {
+        background: #eef7eb; border-radius: var(--radius-lg);
+        padding: 46px; box-shadow: var(--shadow-sm);
+    }
+
+    .contact-form-box h3 { font-size: 22px; font-weight: 700; color: var(--text-dark); margin-bottom: 6px; }
+    .contact-form-box > p { font-size: 13px; color: var(--text-light); margin-bottom: 32px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+    .form-group {
+        display: flex; flex-direction: column; gap: 7px; margin-bottom: 20px;
+    }
+
+    .form-group label {
+        font-size: 11px; font-weight: 700; letter-spacing: 0.8px;
+        text-transform: uppercase; color: var(--text-mid);
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 14px 16px;
+        border: 2px solid #dde8dd;
+        border-radius: var(--radius);
+        font-family: 'Poppins', sans-serif;
+        font-size: 14px; color: var(--text-dark);
+        transition: var(--t); outline: none;
+        background: #e4f0df; width: 100%;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        border-color: var(--green-dark);
+        background: white;
+        box-shadow: 0 0 0 4px rgba(29,92,72,0.07);
+    }
+
+    .form-group textarea { resize: vertical; min-height: 120px; }
+
+    .btn-submit {
+        width: 100%; padding: 16px;
+        background: linear-gradient(135deg, var(--green-darker), var(--green-dark));
+        color: white; border: none;
+        border-radius: 50px; font-family: 'Poppins', sans-serif;
+        font-size: 15px; font-weight: 600; cursor: pointer;
+        transition: var(--t);
+        display: flex; align-items: center; justify-content: center; gap: 10px;
+        box-shadow: 0 6px 26px rgba(14,45,34,0.28);
+    }
+
+    .btn-submit:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 36px rgba(14,45,34,0.38);
+    }
+
+    .btn-submit:active { transform: translateY(0); }
+
+    .form-success {
+        display: none; text-align: center; padding: 40px 20px;
+    }
+
+    .form-success .success-icon {
+        font-size: 52px; color: var(--green-dark);
+        margin-bottom: 18px; display: block;
+    }
+
+    .form-success h4 { font-size: 20px; font-weight: 700; color: var(--text-dark); margin-bottom: 8px; }
+    .form-success p  { font-size: 14px; color: var(--text-light); line-height: 1.6; }
+
+    /* ── MAP ──────────────────────────────── */
+    .map-wrap { height: 420px; }
+    .map-wrap iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+    /* ── FOOTER ───────────────────────────── */
+    footer {
+        background: var(--green-darker);
+        color: rgba(255,255,255,0.62);
+        padding: 72px 0 32px;
+    }
+
+    .footer-grid {
+        max-width: 1200px; margin: 0 auto;
+        padding: 0 30px;
+        display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr;
+        gap: 56px; margin-bottom: 52px;
+    }
+
+    .footer-brand p {
+        font-size: 13px; line-height: 1.85;
+        margin: 18px 0 26px;
+        color: rgba(255,255,255,0.45);
+    }
+
+    .footer-socials { display: flex; gap: 10px; }
+
+    .footer-socials a {
+        width: 38px; height: 38px;
+        background: rgba(255,255,255,0.07);
+        border-radius: 8px;
+        display: flex; align-items: center; justify-content: center;
+        color: rgba(255,255,255,0.62); text-decoration: none;
+        font-size: 14px; transition: var(--t);
+    }
+
+    .footer-socials a:hover {
+        background: var(--orange); color: white;
+        transform: translateY(-4px);
+    }
+
+    .footer-col h4 {
+        font-size: 11px; font-weight: 700;
+        letter-spacing: 2px; text-transform: uppercase;
+        color: white; margin-bottom: 22px;
+    }
+
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+    .footer-links a {
+        color: rgba(255,255,255,0.48); text-decoration: none;
+        font-size: 13px; transition: var(--t);
+        display: flex; align-items: center; gap: 7px;
+    }
+
+    .footer-links a::before { content: '→'; font-size: 10px; opacity: 0.45; }
+    .footer-links a:hover   { color: var(--orange); gap: 11px; }
+
+    .footer-ci { display: flex; gap: 11px; align-items: flex-start; margin-bottom: 14px; font-size: 13px; }
+    .footer-ci i { color: var(--orange); margin-top: 2px; font-size: 13px; flex-shrink: 0; }
+
+    .footer-bottom {
+        max-width: 1200px; margin: 0 auto;
+        padding: 24px 30px 0;
+        border-top: 1px solid rgba(255,255,255,0.07);
+        display: flex; justify-content: space-between;
+        align-items: center; font-size: 12px;
+        color: rgba(255,255,255,0.3);
+    }
+
+    /* ── DIVIDERS ─────────────────────────── */
+
+    /* Lignes animées — entre sections claires */
+    .road-divider.rd-line {
+        height: 6px;
+        overflow: hidden;
+    }
+    .road-divider.rd-line::after {
+        content: '';
+        display: block;
+        height: 6px;
+        animation: roadScroll 2s linear infinite;
+    }
+    .rd-line.rd-orange::after   { background: repeating-linear-gradient(90deg, #e8572a 0, #e8572a 52px, transparent 52px, transparent 88px); }
+    .rd-line.rd-bordeaux::after { background: repeating-linear-gradient(90deg, #7a2420 0, #7a2420 52px, transparent 52px, transparent 88px); }
+    .rd-line.rd-green::after    { background: repeating-linear-gradient(90deg, #1d5c48 0, #1d5c48 52px, transparent 52px, transparent 88px); }
+
+    @keyframes roadScroll {
+        from { transform: translateX(0); }
+        to   { transform: translateX(-88px); }
+    }
+
+    /* Voiture — entre sections claire et foncée */
+    .road-divider.rd-car {
+        height: 54px;
+        overflow: hidden;
+        position: relative;
+    }
+    .rd-dark-to-light { background: linear-gradient(180deg, #1d5c48 0%, #d8edcf 100%); }
+    .rd-light-to-dark { background: linear-gradient(180deg, #cce5c2 0%, #0e2d22 100%); }
+
+    .divider-car {
+        position: absolute;
+        bottom: 4px;
+        pointer-events: none;
+        animation: driveLTR 9s linear infinite;
+    }
+
+    .rd-car.rd-orange   .divider-car { color: #e8572a; }
+    .rd-car.rd-bordeaux .divider-car { color: #7a2420; }
+    .rd-car.rd-green    .divider-car { color: #1d5c48; }
+
+    @keyframes driveLTR {
+        from { left: -100px; }
+        to   { left: calc(100% + 100px); }
+    }
+
+    /* ── SCROLL-TO-TOP ────────────────────── */
+    .scroll-top {
+        position: fixed; bottom: 28px; right: 28px;
+        width: 48px; height: 48px;
+        background: var(--orange); color: white;
+        border: none; border-radius: 12px;
+        font-size: 18px; cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+        opacity: 0; transform: translateY(20px);
+        transition: var(--t); z-index: 200;
+        box-shadow: 0 4px 20px rgba(232,87,42,0.4);
+    }
+
+    .scroll-top.show { opacity: 1; transform: translateY(0); }
+    .scroll-top:hover { transform: translateY(-4px); background: var(--orange-dark); }
+
+    /* ── RESPONSIVE ───────────────────────── */
+    @media (max-width: 1100px) {
+        .formations-grid { grid-template-columns: repeat(2,1fr); }
+        .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+    }
+
+    @media (max-width: 860px) {
+        .tarif-card.featured { transform: none; }
+        .why-grid { grid-template-columns: 1fr 1fr; }
+        .fin-grid { grid-template-columns: 1fr 1fr; }
+        .tarif-extras-inner { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (max-width: 768px) {
+        /* ── Navbar ── */
+        .nav-menu { display: none; }
+        .hamburger { display: flex; }
+        .nav-menu.open {
+            display: flex; flex-direction: column;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(14,45,34,0.98);
+            backdrop-filter: blur(12px);
+            justify-content: center; align-items: center;
+            gap: 18px; z-index: 999;
+        }
+        .nav-menu.open a { font-size: 22px; padding: 12px 24px; }
+
+        /* ── Hero ── */
+        .hero-container { grid-template-columns: 1fr; text-align: center; padding: 100px 20px 70px; }
+        .hero-image-wrap { display: none; }
+        .hero-buttons { justify-content: center; }
+        .hero-badge { margin: 0 auto 26px; }
+        .hero-subtitle { margin: 0 auto 36px; max-width: 100%; }
+
+        /* ── Stats ── */
+        .stats-container { grid-template-columns: 1fr 1fr; gap: 0; }
+        .stat-item { border-right: none; padding: 16px 10px; }
+        .stat-item:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.12); }
+        .stat-number { font-size: 32px; }
+
+        /* ── Section commons ── */
+        .about, .formations, .tarifs, .financements, .why-us, .testimonials, .contact { padding: 70px 0; }
+        .section-wrap { padding: 0 18px; }
+        .section-header { margin-bottom: 40px; }
+
+        /* ── About ── */
+        .about-grid { grid-template-columns: 1fr; gap: 40px; }
+        .about-badge { bottom: -14px; right: -10px; }
+        .about-content .section-header { text-align: center; }
+        .about-features { grid-template-columns: 1fr 1fr; }
+
+        /* ── Formations ── */
+        .formations-grid { grid-template-columns: 1fr 1fr; }
+
+        /* ── Tarifs ── */
+        .tarifs-swiper-wrap { padding: 0 44px; }
+        .swiper-nav-btn { width: 38px; height: 38px; font-size: 14px; }
+
+        /* ── Financements ── */
+        .fin-grid { grid-template-columns: 1fr 1fr; }
+
+        /* ── Contact ── */
+        .contact-grid { grid-template-columns: 1fr; }
+        .contact-info { position: static; }
+        .ci-map { height: 200px; }
+        .form-row { grid-template-columns: 1fr; }
+
+        /* ── Footer ── */
+        .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+        .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+    }
+
+    @media (max-width: 520px) {
+        /* ── Hero ── */
+        .hero-buttons { flex-direction: column; align-items: stretch; }
+        .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+
+        /* ── Stats ── */
+        .stats-bar { padding: 30px 0; }
+
+        /* ── Formations ── */
+        .formations-grid { grid-template-columns: 1fr; }
+
+        /* ── Financements ── */
+        .fin-grid { grid-template-columns: 1fr; }
+
+        /* ── Why us ── */
+        .why-grid { grid-template-columns: 1fr; }
+
+        /* ── Tarifs ── */
+        .tarifs-swiper-wrap { padding: 0 36px; }
+
+        /* ── Contact ── */
+        .ci-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     NAVBAR
+════════════════════════════════════════ -->
+<nav id="navbar">
+    <div class="nav-container">
+        <a href="#accueil" class="nav-logo">
+            <div class="nav-logo-icon"><img src="images/logo-nav.png" alt="Logo Auto-École des Ancizes"></div>
+            <div class="nav-logo-text">
+                <span class="line1">Auto-École</span>
+                <span class="line2">des Ancizes</span>
+            </div>
+        </a>
+
+        <ul class="nav-menu" id="navMenu">
+            <li><a href="#accueil"    onclick="closeMenu()">Accueil</a></li>
+            <li><a href="#formations" onclick="closeMenu()">Formations</a></li>
+            <li><a href="#tarifs"        onclick="closeMenu()">Tarifs</a></li>
+            <li><a href="#financements" onclick="closeMenu()">Financements</a></li>
+            <li><a href="#ecole"        onclick="closeMenu()">L'auto-école</a></li>
+            <li><a href="#contact"    onclick="closeMenu()" class="nav-cta">Nous contacter</a></li>
+        </ul>
+
+        <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+
+<!-- ═══════════════════════════════════════
+     HERO
+════════════════════════════════════════ -->
+<section id="accueil" class="hero">
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-orb hero-orb-3"></div>
+
+    <div class="hero-container">
+        <!-- Content -->
+        <div>
+            <div class="hero-badge">
+                <i class="fas fa-map-marker-alt"></i>
+                <span data-cms="hero-badge">Grande Ouverture — Les Ancizes-Comps</span>
+            </div>
+            <h1 class="hero-title">
+                Obtenez votre<br>
+                <span class="hl">Permis de Conduire</span><br>
+                sereinement
+            </h1>
+            <p class="hero-subtitle" data-cms="hero-subtitle">
+                Formateurs certifiés, pédagogie bienveillante et suivi personnalisé pour réussir du premier coup à Les Ancizes-Comps.
+            </p>
+            <div class="hero-buttons">
+                <a href="#formations" class="btn-primary">
+                    <i class="fas fa-graduation-cap"></i>Nos formations
+                </a>
+                <a href="#contact" class="btn-secondary">
+                    <i class="fas fa-phone"></i>Nous contacter
+                </a>
+            </div>
+        </div>
+
+        <!-- Logo image -->
+        <div class="hero-image-wrap">
+            <div class="hero-glow"></div>
+            <img src="images/logo-square.jpg" alt="Auto-École des Ancizes" class="hero-logo-img">
+        </div>
+    </div>
+
+    <div class="hero-scroll">
+        <span>Découvrir</span>
+        <i class="fas fa-chevron-down"></i>
+    </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     STATS
+════════════════════════════════════════ -->
+<section class="stats-bar">
+    <div class="stats-container">
+        <div class="stat-item" data-aos="fade-up" data-aos-delay="0">
+            <div class="stat-number"><span class="counter" data-target="11" data-cms="stat-3-num">0</span></div>
+            <div class="stat-label" data-cms="stat-3-label">Ans d'expérience</div>
+        </div>
+        <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
+            <div class="stat-number"><span class="counter" data-target="2" data-cms="stat-4-num">0</span></div>
+            <div class="stat-label" data-cms="stat-4-label">Moniteurs diplômés</div>
+        </div>
+    </div>
+</section>
+
+
+<div class="road-divider rd-car rd-dark-to-light rd-bordeaux"></div>
+
+<!-- ═══════════════════════════════════════
+     À PROPOS
+════════════════════════════════════════ -->
+<section id="ecole" class="about">
+    <div class="section-wrap">
+        <div class="about-grid">
+            <div class="about-img-wrap" data-aos="fade-right" data-aos-duration="800">
+                <img src="images/logo-banner.jpg" alt="Auto-École des Ancizes — bannière">
+                <div class="about-badge">
+                    <strong>N°1</strong>
+                    <span>dans le secteur</span>
+                </div>
+            </div>
+
+            <div class="about-content" data-aos="fade-left" data-aos-duration="800">
+                <div class="section-header">
+                    <div class="section-tag">Notre histoire</div>
+                    <h2 class="section-title">L'Auto-École<br><span class="accent">des Ancizes</span></h2>
+                </div>
+                <p class="about-text" data-cms="about-p1">
+                    Située au cœur des Ancizes-Comps, notre auto-école vous accueille dans un cadre bienveillant et professionnel. Nous mettons un point d'honneur à proposer une formation de qualité, entièrement adaptée à chaque élève.
+                </p>
+                <p class="about-text" data-cms="about-p2">
+                    Notre équipe de moniteurs diplômés vous accompagne à chaque étape de votre parcours, du code de la route jusqu'à l'examen pratique, avec patience et pédagogie.
+                </p>
+                <ul class="about-checklist">
+                    <li><i class="fas fa-check-circle"></i><span>Formateurs titulaires du BEPECASER ou titre pro ECSR</span></li>
+                    <li><i class="fas fa-check-circle"></i><span>Évaluation de départ et suivi personnalisé</span></li>
+                    <li><i class="fas fa-check-circle"></i><span>Véhicules récents et bien équipés</span></li>
+                    <li><i class="fas fa-check-circle"></i><span>Horaires flexibles en semaine, soirée et samedi</span></li>
+                    <li><i class="fas fa-check-circle"></i><span>Plateforme code de la route en ligne 24h/24</span></li>
+                </ul>
+                <div class="team-row">
+                    <div class="team-chip">
+                        <div class="team-chip-avatar">C</div>
+                        <div>
+                            <div class="team-chip-name">Clémence</div>
+                            <div class="team-chip-role">Gérante & Monitrice</div>
+                        </div>
+                    </div>
+                    <div class="team-chip">
+                        <div class="team-chip-avatar">K</div>
+                        <div>
+                            <div class="team-chip-name">Kevin</div>
+                            <div class="team-chip-role">Moniteur</div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="#contact" class="btn-primary" style="margin-top:28px">
+                    <i class="fas fa-arrow-right"></i>Prendre contact
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="road-divider rd-line rd-orange"></div>
+
+<!-- ═══════════════════════════════════════
+     FORMATIONS
+════════════════════════════════════════ -->
+<section id="formations" class="formations">
+    <div class="section-wrap">
+        <div class="section-header" data-aos="fade-up">
+            <div class="section-tag">Ce que nous proposons</div>
+            <h2 class="section-title">Nos <span class="accent">Formations</span></h2>
+            <p class="section-subtitle">Des formations adaptées à tous les profils et tous les âges, pour conduire en toute confiance.</p>
+        </div>
+
+        <div class="formations-grid">
+
+            <div class="formation-card" data-aos="fade-up" data-aos-delay="0">
+                <div class="f-icon"><i class="fas fa-car"></i></div>
+                <h3 data-cms="form-1-title">Permis B</h3>
+                <p data-cms="form-1-desc">La formation classique pour conduire une voiture. Cours théoriques et pratiques, avec accompagnement jusqu'à l'examen.</p>
+                <a href="#tarifs" class="f-link">Voir les tarifs <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="formation-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="f-icon"><i class="fas fa-child"></i></div>
+                <h3 data-cms="form-2-title">Conduite Accompagnée</h3>
+                <p data-cms="form-2-desc">Dès 15 ans, commencez à conduire avec un accompagnateur agréé. La meilleure façon d'aborder l'examen sereinement.</p>
+                <a href="#tarifs" class="f-link">Voir les tarifs <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="formation-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="f-icon"><i class="fas fa-car-side"></i></div>
+                <h3 data-cms="form-3-title">Permis Boite Automatique</h3>
+                <p data-cms="form-3-desc">Idéal pour conduire en boite automatique. Formation allégée à partir de 13h, accessible à tous les profils.</p>
+                <a href="#tarifs" class="f-link">Voir les tarifs <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="formation-card" data-aos="fade-up" data-aos-delay="0">
+                <div class="f-icon"><i class="fas fa-user-clock"></i></div>
+                <h3 data-cms="form-4-title">AAC Boite Automatique</h3>
+                <p data-cms="form-4-desc">La conduite accompagnée dès 15 ans en boite automatique. Combinez les avantages de l'AAC avec la simplicité de la boite auto.</p>
+                <a href="#tarifs" class="f-link">Voir les tarifs <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="formation-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="f-icon"><i class="fas fa-motorcycle"></i></div>
+                <h3 data-cms="form-5-title">Permis AM</h3>
+                <p data-cms="form-5-desc">Formation obligatoire pour conduire un cyclomoteur 50 cm³. Accessible dès 14 ans, idéal pour les jeunes en milieu rural.</p>
+                <a href="#tarifs" class="f-link">Voir les tarifs <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="formation-card" data-aos="fade-up" data-aos-delay="150">
+                <div class="f-icon"><i class="fas fa-car"></i></div>
+                <h3 data-cms="form-7-title">AM Quadricycle</h3>
+                <p data-cms="form-7-desc">Formation pour conduire un quadricycle léger (voiturette). 8h de formation dont 2h de théorie et 6h de pratique, dès 14 ans.</p>
+                <a href="#tarifs" class="f-link">Voir les tarifs <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+
+        </div>
+    </div>
+</section>
+
+
+<div class="road-divider rd-line rd-bordeaux"></div>
+
+<!-- ═══════════════════════════════════════
+     TARIFS
+════════════════════════════════════════ -->
+<section id="tarifs" class="tarifs">
+    <div class="section-wrap">
+        <div class="section-header" data-aos="fade-up">
+            <div class="section-tag">Investissez dans votre liberté</div>
+            <h2 class="section-title">Nos <span class="accent">Tarifs</span></h2>
+            <p class="section-subtitle">Des formules claires et transparentes. Contactez-nous pour un devis personnalisé selon votre niveau.</p>
+        </div>
+    </div>
+
+    <div class="tarifs-swiper-wrap">
+        <button class="swiper-nav-btn prev" id="tarifPrev"><i class="fas fa-chevron-left"></i></button>
+        <button class="swiper-nav-btn next" id="tarifNext"><i class="fas fa-chevron-right"></i></button>
+
+        <div class="swiper tarifs-swiper">
+        <div class="swiper-wrapper">
+
+        <!-- Permis B -->
+        <div class="swiper-slide">
+        <div class="tarif-card">
+            <div class="tarif-tag">Boite manuelle</div>
+            <div class="tarif-title">Permis B</div>
+            <div class="tarif-price">
+                <span class="price-num" data-cms="tarif-1-price">1594</span>
+                <span class="price-euro">€</span>
+            </div>
+            <ul class="tarif-list">
+                <li><i class="fas fa-check"></i>Forfait code inclus</li>
+                <li><i class="fas fa-check"></i>Accès code en ligne</li>
+                <li><i class="fas fa-check"></i>Frais administratifs inclus</li>
+                <li><i class="fas fa-check"></i>20h de conduite</li>
+                <li><i class="fas fa-check"></i>Évaluation de départ</li>
+                <li><i class="fas fa-check"></i>Présentation à l'examen pratique</li>
+            </ul>
+            <a href="#contact" class="btn-enroll">S'inscrire</a>
+        </div>
+        </div>
+
+        <!-- Conduite Accompagnée -->
+        <div class="swiper-slide">
+        <div class="tarif-card featured">
+            <span class="feat-badge">Populaire</span>
+            <div class="tarif-tag">Dès 15 ans</div>
+            <div class="tarif-title">Conduite Accompagnée</div>
+            <div class="tarif-price">
+                <span class="price-num" data-cms="tarif-2-price">1780</span>
+                <span class="price-euro">€</span>
+            </div>
+            <ul class="tarif-list">
+                <li><i class="fas fa-check"></i>Forfait code inclus</li>
+                <li><i class="fas fa-check"></i>Frais administratifs inclus</li>
+                <li><i class="fas fa-check"></i>Accès code en ligne</li>
+                <li><i class="fas fa-check"></i>20h de conduite</li>
+                <li><i class="fas fa-check"></i>1 RDV Préalable</li>
+                <li><i class="fas fa-check"></i>2 RDV Pédagogiques</li>
+                <li><i class="fas fa-check"></i>Évaluation de départ</li>
+                <li><i class="fas fa-check"></i>Présentation à l'examen pratique</li>
+            </ul>
+            <a href="#contact" class="btn-enroll">S'inscrire</a>
+        </div>
+        </div>
+
+        <!-- Permis Boite Auto -->
+        <div class="swiper-slide">
+        <div class="tarif-card">
+            <div class="tarif-tag">Boite automatique</div>
+            <div class="tarif-title">Permis Boite Auto</div>
+            <div class="tarif-price">
+                <span class="price-num" data-cms="tarif-3-price">1160</span>
+                <span class="price-euro">€</span>
+            </div>
+            <ul class="tarif-list">
+                <li><i class="fas fa-check"></i>Forfait code inclus</li>
+                <li><i class="fas fa-check"></i>Accès code en ligne</li>
+                <li><i class="fas fa-check"></i>Frais administratifs inclus</li>
+                <li><i class="fas fa-check"></i>13h de conduite</li>
+                <li><i class="fas fa-check"></i>Évaluation de départ</li>
+                <li><i class="fas fa-check"></i>Présentation à l'examen pratique</li>
+            </ul>
+            <a href="#contact" class="btn-enroll">S'inscrire</a>
+        </div>
+        </div>
+
+        <!-- Conduite Accompagnée Boite Auto -->
+        <div class="swiper-slide">
+        <div class="tarif-card featured">
+            <div class="tarif-tag">Dès 15 ans • Boite auto</div>
+            <div class="tarif-title">Conduite Accompagnée Boite Auto</div>
+            <div class="tarif-price">
+                <span class="price-num" data-cms="tarif-4-price">1346</span>
+                <span class="price-euro">€</span>
+            </div>
+            <ul class="tarif-list">
+                <li><i class="fas fa-check"></i>Forfait code inclus</li>
+                <li><i class="fas fa-check"></i>Frais administratifs inclus</li>
+                <li><i class="fas fa-check"></i>Accès code en ligne</li>
+                <li><i class="fas fa-check"></i>13h de conduite</li>
+                <li><i class="fas fa-check"></i>1 RDV Préalable</li>
+                <li><i class="fas fa-check"></i>2 RDV Pédagogiques</li>
+                <li><i class="fas fa-check"></i>Évaluation de départ</li>
+                <li><i class="fas fa-check"></i>Présentation à l'examen pratique</li>
+            </ul>
+            <a href="#contact" class="btn-enroll">S'inscrire</a>
+        </div>
+        </div>
+
+        <!-- AM Quadricycle -->
+        <div class="swiper-slide">
+        <div class="tarif-card">
+            <div class="tarif-tag">Dès 14 ans</div>
+            <div class="tarif-title">AM Quadricycle</div>
+            <div class="tarif-price">
+                <span class="price-num" data-cms="tarif-5-price">500</span>
+                <span class="price-euro">€</span>
+            </div>
+            <ul class="tarif-list">
+                <li><i class="fas fa-check"></i>8h de formation totale</li>
+                <li><i class="fas fa-check"></i>2h de théorie</li>
+                <li><i class="fas fa-check"></i>6h de pratique</li>
+                <li><i class="fas fa-check"></i>Accessible dès 14 ans</li>
+                <li><i class="fas fa-check"></i>Présentation à l'examen</li>
+            </ul>
+            <a href="#contact" class="btn-enroll">S'inscrire</a>
+        </div>
+        </div>
+
+        </div><!-- /swiper-wrapper -->
+        </div><!-- /swiper -->
+    </div><!-- /tarifs-swiper-wrap -->
+
+    <!-- Heures supplémentaires -->
+    <div class="tarif-extras" data-aos="fade-up">
+        <div class="tarif-extras-inner">
+            <p class="tarif-extras-title"><i class="fas fa-info-circle"></i> Forfaits 25h / 30h / 40h disponibles — Tous les forfaits sont disponibles avec ou sans le forfait code</p>
+            <div class="tarif-extras-prices">
+                <span><strong>1h</strong> = 63,00 €</span>
+                <span><strong>Pack 10h</strong> = 600,00 €</span>
+                <span><strong>Pack 15h</strong> = 900,00 €</span>
+            </div>
+        </div>
+    </div>
+
+    <p class="tarif-note" data-aos="fade-up">
+        Le nombre d'heures peut varier selon votre niveau initial.
+        <a href="#contact">Contactez-nous</a> pour un devis personnalisé gratuit.
+    </p>
+</section>
+
+
+<div class="road-divider rd-car rd-light-to-dark rd-green"></div>
+
+<!-- ═══════════════════════════════════════
+     FINANCEMENTS
+════════════════════════════════════════ -->
+<section id="financements" class="financements">
+    <div class="section-wrap">
+        <div class="section-header" data-aos="fade-up">
+            <div class="section-tag">Rendez votre permis accessible</div>
+            <h2 class="section-title">Modes de <span class="accent">Financement</span></h2>
+            <p class="section-subtitle">Plusieurs solutions existent pour financer votre permis. Nous vous aidons à trouver celle qui vous correspond.</p>
+        </div>
+
+        <div class="fin-grid">
+
+            <div class="fin-card" data-aos="fade-up" data-aos-delay="0">
+                <div class="fin-icon"><i class="fas fa-euro-sign"></i></div>
+                <h3>Permis à 1€/jour</h3>
+                <p>Pour les jeunes de 15 à 25 ans. Un prêt à taux zéro accordé par l'État via les banques partenaires pour financer votre permis B ou AAC.</p>
+            </div>
+
+            <div class="fin-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="fin-icon"><i class="fas fa-map-marked-alt"></i></div>
+                <h3>Pass Région</h3>
+                <p>La Région Auvergne-Rhône-Alpes propose des aides financières pour le permis de conduire via le Pass Région. Renseignez-vous auprès de votre lycée ou mission locale.</p>
+            </div>
+
+        </div>
+
+        <div class="fin-note" data-aos="fade-up">
+            <p><i class="fas fa-info-circle"></i> Échelonnement possible pour les financements personnels — Contactez-nous pour en savoir plus.</p>
+        </div>
+    </div>
+</section>
+
+<div class="road-divider rd-car rd-dark-to-light rd-orange"></div>
+
+<!-- ═══════════════════════════════════════
+     POURQUOI NOUS
+════════════════════════════════════════ -->
+<section class="why-us">
+    <div class="section-wrap">
+        <div class="section-header" data-aos="fade-up">
+            <div class="section-tag">Nos engagements</div>
+            <h2 class="section-title">Pourquoi nous <span class="accent">choisir ?</span></h2>
+            <p class="section-subtitle">Nous mettons tout en œuvre pour vous offrir la meilleure formation dans les meilleures conditions.</p>
+        </div>
+
+        <div class="why-grid">
+            <div class="why-card" data-aos="fade-up" data-aos-delay="0">
+                <div class="why-card-icon"><i class="fas fa-trophy"></i></div>
+                <h3>Taux de réussite élevé</h3>
+                <p>Nos méthodes pédagogiques modernes et notre suivi individuel garantissent un excellent taux de réussite dès le premier passage.</p>
+            </div>
+            <div class="why-card" data-aos="fade-up" data-aos-delay="80">
+                <div class="why-card-icon"><i class="fas fa-user-tie"></i></div>
+                <h3>Formateurs certifiés</h3>
+                <p>Tous nos moniteurs sont diplômés d'État (BEPECASER ou Titre Pro ECSR) et régulièrement formés aux nouvelles pratiques pédagogiques.</p>
+            </div>
+            <div class="why-card" data-aos="fade-up" data-aos-delay="160">
+                <div class="why-card-icon"><i class="fas fa-calendar-check"></i></div>
+                <h3>Horaires flexibles</h3>
+                <p>Créneaux disponibles en semaine, en soirée et le samedi pour s'adapter à votre vie professionnelle et personnelle.</p>
+            </div>
+            <div class="why-card" data-aos="fade-up" data-aos-delay="0">
+                <div class="why-card-icon"><i class="fas fa-car-side"></i></div>
+                <h3>Véhicules modernes</h3>
+                <p>Nos véhicules d'apprentissage sont récents, bien entretenus et équipés des dernières technologies de sécurité active.</p>
+            </div>
+            <div class="why-card" data-aos="fade-up" data-aos-delay="80">
+                <div class="why-card-icon"><i class="fas fa-laptop-code"></i></div>
+                <h3>Code en ligne 24h/24</h3>
+                <p>Accédez à notre plateforme de code à tout moment pour vous entraîner à votre rythme, depuis n'importe quel appareil.</p>
+            </div>
+            <div class="why-card" data-aos="fade-up" data-aos-delay="160">
+                <div class="why-card-icon"><i class="fas fa-heart"></i></div>
+                <h3>Ambiance bienveillante</h3>
+                <p>Un cadre rassurant où chaque élève progresse à son rythme, en confiance. Votre réussite est notre fierté.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="road-divider rd-line rd-orange"></div>
+
+<!-- ═══════════════════════════════════════
+     TÉMOIGNAGES
+════════════════════════════════════════ -->
+<section class="testimonials">
+    <div class="section-wrap">
+        <div class="section-header" data-aos="fade-up">
+            <div class="section-tag">Ils nous font confiance</div>
+            <h2 class="section-title">Ce que disent nos <span style="color:var(--orange)">élèves</span></h2>
+            <p class="section-subtitle">Découvrez les retours de ceux qui ont obtenu leur permis avec nous.</p>
+        </div>
+    </div>
+
+    <div class="section-wrap" data-aos="fade-up">
+        <!-- Elfsight Google Reviews | Untitled Google Reviews -->
+        <script src="https://elfsightcdn.com/platform.js" async></script>
+        <div class="elfsight-app-9f04ecbb-0468-43c4-a2d2-b39a8742ed5e" data-elfsight-app-lazy></div>
+    </div>
+</section>
+
+
+<div class="road-divider rd-line rd-green"></div>
+
+<!-- ═══════════════════════════════════════
+     CONTACT
+════════════════════════════════════════ -->
+<section id="contact" class="contact">
+    <div class="section-wrap">
+        <div class="section-header" data-aos="fade-up">
+            <div class="section-tag">Parlons de votre projet</div>
+            <h2 class="section-title">Nous <span class="accent">Contacter</span></h2>
+            <p class="section-subtitle">Une question, une inscription ? Contactez-nous et nous vous répondrons dans les plus brefs délais.</p>
+        </div>
+
+        <div class="contact-grid">
+            <!-- Info -->
+            <div class="contact-info" data-aos="fade-right">
+                <h3>Venez nous voir</h3>
+                <p>Nous sommes disponibles pour répondre à toutes vos questions.</p>
+
+                <div class="ci-item">
+                    <div class="ci-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="ci-text">
+                        <strong>Adresse</strong>
+                        <span data-cms="contact-address">25 Avenue du Plan d'Eau<br>63770 Les Ancizes-Comps</span>
+                    </div>
+                </div>
+
+                <div class="ci-item">
+                    <div class="ci-icon"><i class="fas fa-phone"></i></div>
+                    <div class="ci-text">
+                        <strong>Téléphone</strong>
+                        <span><a href="tel:0473865705" data-cms="contact-phone">04 73 86 57 05</a></span>
+                    </div>
+                </div>
+
+                <div class="ci-item">
+                    <div class="ci-icon"><i class="fas fa-envelope"></i></div>
+                    <div class="ci-text">
+                        <strong>Email</strong>
+                        <span data-cms="contact-email">autoecoledesancizes@gmail.com</span>
+                    </div>
+                </div>
+
+                <div class="ci-hours">
+                    <h4>Horaires d'ouverture</h4>
+                    <div style="font-size:11px;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px">Bureau</div>
+                    <div class="ci-hours-row"><strong>Mercredi</strong><span data-cms="hours-bur-mer">14h00 – 18h00</span></div>
+                    <div class="ci-hours-row"><strong>Vendredi</strong><span data-cms="hours-bur-ven">14h00 – 18h00</span></div>
+                    <div style="font-size:11px;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:0.08em;margin-top:12px;margin-bottom:4px">Conduite</div>
+                    <div class="ci-hours-row"><strong>Mardi – Vendredi</strong><span data-cms="hours-con-wd">9h00 – 17h00</span></div>
+                    <div class="ci-hours-row"><strong>Samedi</strong><span data-cms="hours-con-sam">8h00 – 14h00</span></div>
+                </div>
+            </div>
+
+            <!-- Form -->
+            <div class="contact-form-box" data-aos="fade-left">
+                <h3>Envoyez-nous un message</h3>
+                <p>Nous vous répondrons sous 24h ouvrées.</p>
+
+                <form id="contactForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="prenom">Prénom *</label>
+                            <input type="text" id="prenom" name="prenom" placeholder="Votre prénom" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nom">Nom *</label>
+                            <input type="text" id="nom" name="nom" placeholder="Votre nom" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="telephone">Téléphone</label>
+                            <input type="tel" id="telephone" name="telephone" placeholder="06 00 00 00 00">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" placeholder="votre@email.fr" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="formation">Formation souhaitée</label>
+                        <select id="formation" name="formation">
+                            <option value="">Sélectionnez une formation</option>
+                            <option value="Permis B">Permis B</option>
+                            <option value="Conduite Accompagnée (AAC)">Conduite Accompagnée (AAC)</option>
+                            <option value="Permis AM">Permis AM (cyclomoteur)</option>
+                            <option value="Code de la route">Code de la route uniquement</option>
+                            <option value="Autre / Question générale">Autre / Question générale</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" placeholder="Votre message, question ou demande d'information..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-primary btn-submit">
+                        <i class="fas fa-paper-plane"></i>Envoyer le message
+                    </button>
+                </form>
+
+                <div class="form-success" id="formSuccess">
+                    <i class="fas fa-check-circle success-icon"></i>
+                    <h4>Message envoyé !</h4>
+                    <p>Merci pour votre message. Nous vous recontacterons dans les plus brefs délais.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     CARTE
+════════════════════════════════════════ -->
+<div class="map-wrap">
+    <iframe
+        src="https://www.google.com/maps?q=25+Avenue+du+Plan+d%27Eau+63770+Les+Ancizes-Comps&output=embed"
+        allowfullscreen loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Auto-École des Ancizes — carte">
+    </iframe>
+</div>
+
+
+<div class="road-divider rd-line rd-orange"></div>
+
+<!-- ═══════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
+<footer>
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <a href="#accueil" class="nav-logo">
+                <div class="nav-logo-icon"><img src="images/logo-nav.png" alt="Logo Auto-École des Ancizes"></div>
+                <div class="nav-logo-text">
+                    <span class="line1">Auto-École</span>
+                    <span class="line2">des Ancizes</span>
+                </div>
+            </a>
+            <p>Votre auto-école de confiance aux Ancizes-Comps. Formateurs certifiés, pédagogie bienveillante et taux de réussite élevé depuis notre ouverture.</p>
+            <div class="footer-socials">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+
+        <div class="footer-col">
+            <h4>Navigation</h4>
+            <ul class="footer-links">
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#formations">Nos formations</a></li>
+                <li><a href="#tarifs">Tarifs</a></li>
+                <li><a href="#ecole">L'auto-école</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h4>Formations</h4>
+            <ul class="footer-links">
+                <li><a href="#formations">Permis B</a></li>
+                <li><a href="#formations">Conduite accompagnée</a></li>
+                <li><a href="#formations">Permis AM</a></li>
+                <li><a href="#formations">Code de la route</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h4>Contact</h4>
+            <div class="footer-ci">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>25 Avenue du Plan d'Eau<br>63770 Les Ancizes-Comps</span>
+            </div>
+            <div class="footer-ci">
+                <i class="fas fa-phone"></i>
+                <span><a href="tel:0473865705" style="color:inherit;text-decoration:none;">04 73 86 57 05</a></span>
+            </div>
+            <div class="footer-ci">
+                <i class="fas fa-clock"></i>
+                <span>Lun–Ven : 9h–18h | Sam : 9h–13h</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <span>© 2025 Auto-École des Ancizes. Tous droits réservés.</span>
+        <span>Site web professionnel</span>
+    </div>
+</footer>
+
+
+<!-- SCROLL TO TOP -->
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Haut de page">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+
+<!-- ═══════════════════════════════════════
+     SCRIPTS
+════════════════════════════════════════ -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<!-- Firebase CMS -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDOFlB2CxuOIzaawW-qS958zeuyDYadmMM",
+    authDomain: "auto-ecole-ancizes.firebaseapp.com",
+    projectId: "auto-ecole-ancizes",
+    storageBucket: "auto-ecole-ancizes.firebasestorage.app",
+    messagingSenderId: "733931346601",
+    appId: "1:733931346601:web:1300a311a6b8624920e7b8"
+};
+
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+
+(async () => {
+    try {
+        const snap = await getDoc(doc(db, "site", "content"));
+        if (!snap.exists()) return;
+        const data = snap.data();
+
+        // Appliquer les textes
+        document.querySelectorAll('[data-cms]').forEach(el => {
+            const key = el.getAttribute('data-cms');
+            if (data[key] === undefined) return;
+
+            // Cas spécial : stat numbers (met à jour data-target pour l'animation compteur)
+            if (key.startsWith('stat-') && key.endsWith('-num')) {
+                el.setAttribute('data-target', data[key]);
+            } else {
+                el.textContent = data[key];
+            }
+        });
+    } catch(e) {
+        console.warn('CMS Firebase non disponible', e);
+    }
+})();
+</script>
+
+<script>
+/* ── DIVIDERS — esquisse voiture du logo ─ */
+(function() {
+    // SVG reprenant le style esquissé de la voiture du logo
+    const carSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 52" width="78" height="37" fill="none" style="display:block">
+      <!-- Carrosserie -->
+      <path d="M7 35 L7 28 Q8 22 15 22 L27 22 L38 9 Q42 4 52 4 Q62 4 66 9 L77 22 L90 22 Q100 22 101 29 L101 35"
+            stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Bas de caisse (avec espaces roues) -->
+      <path d="M7 35 L20 35" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+      <path d="M36 35 L72 35" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+      <path d="M87 35 L101 35" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+      <!-- Roue avant -->
+      <circle cx="28" cy="37" r="10" stroke="currentColor" stroke-width="3"/>
+      <circle cx="28" cy="37" r="3.5" stroke="currentColor" stroke-width="2"/>
+      <!-- Roue arrière -->
+      <circle cx="80" cy="37" r="10" stroke="currentColor" stroke-width="3"/>
+      <circle cx="80" cy="37" r="3.5" stroke="currentColor" stroke-width="2"/>
+      <!-- Vitre / habitacle -->
+      <path d="M40 22 L47 9 Q50 5 54 5 Q58 5 61 9 L68 22 Z"
+            stroke="currentColor" stroke-width="2.8" stroke-linejoin="round"/>
+    </svg>`;
+
+    document.querySelectorAll('.road-divider.rd-car').forEach(div => {
+        const car = document.createElement('div');
+        car.className = 'divider-car';
+        car.innerHTML = carSVG;
+        div.appendChild(car);
+    });
+})();
+
+/* ── AOS ─────────────────────────────── */
+AOS.init({ duration: 720, easing: 'ease-out-cubic', once: true, offset: 55 });
+
+/* ── NAVBAR + SCROLL-TO-TOP ──────────── */
+const navbar    = document.getElementById('navbar');
+const scrollBtn = document.getElementById('scrollTop');
+
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 70) {
+        navbar.classList.add('scrolled');
+        scrollBtn.classList.add('show');
+    } else {
+        navbar.classList.remove('scrolled');
+        scrollBtn.classList.remove('show');
+    }
+});
+
+/* ── MOBILE MENU ─────────────────────── */
+function toggleMenu() {
+    const menu = document.getElementById('navMenu');
+    const ham  = document.getElementById('hamburger');
+    const open = menu.classList.toggle('open');
+    ham.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+}
+
+function closeMenu() {
+    document.getElementById('navMenu').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+    document.body.style.overflow = '';
+}
+
+/* ── COUNTER ANIMATION ───────────────── */
+function runCounters() {
+    document.querySelectorAll('.counter').forEach(el => {
+        const target   = +el.dataset.target;
+        const duration = 1800;
+        const step     = target / (duration / 16);
+        let current    = 0;
+        const timer = setInterval(() => {
+            current += step;
+            if (current >= target) { current = target; clearInterval(timer); }
+            el.textContent = Math.floor(current);
+        }, 16);
+    });
+}
+
+new IntersectionObserver((entries, obs) => {
+    entries.forEach(e => { if (e.isIntersecting) { runCounters(); obs.disconnect(); } });
+}, { threshold: 0.5 }).observe(document.querySelector('.stats-bar'));
+
+/* ── SWIPER TARIFS ───────────────────── */
+new Swiper('.tarifs-swiper', {
+    slidesPerView: 1,
+    spaceBetween: 24,
+    navigation: { nextEl: '#tarifNext', prevEl: '#tarifPrev' },
+    breakpoints: {
+        600:  { slidesPerView: 2 },
+        1024: { slidesPerView: 3 },
+    }
+});
+
+
+/* ── EMAILJS CONTACT FORM ────────────── */
+/*
+ * CONFIGURATION EMAILJS — 3 étapes simples :
+ * 1. Créez un compte gratuit sur https://www.emailjs.com
+ * 2. Ajoutez un service email (Gmail, etc.) → notez votre SERVICE_ID
+ * 3. Créez un template avec les variables :
+ *      {{from_name}}, {{from_email}}, {{phone}}, {{formation}}, {{message}}
+ *    → notez votre TEMPLATE_ID et votre PUBLIC_KEY
+ * 4. Remplacez les 3 valeurs ci-dessous.
+ */
+emailjs.init('VOTRE_PUBLIC_KEY');   // ← remplacer
+
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const btn  = this.querySelector('.btn-submit');
+    const orig = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi…';
+    btn.disabled  = true;
+
+    const d = new FormData(this);
+    emailjs.send('VOTRE_SERVICE_ID', 'VOTRE_TEMPLATE_ID', {  // ← remplacer
+        from_name:  `${d.get('prenom')} ${d.get('nom')}`,
+        from_email: d.get('email'),
+        phone:      d.get('telephone') || 'Non renseigné',
+        formation:  d.get('formation') || 'Non spécifiée',
+        message:    d.get('message')   || '—',
+    })
+    .then(() => {
+        this.style.display = 'none';
+        document.getElementById('formSuccess').style.display = 'block';
+    })
+    .catch(() => {
+        btn.innerHTML = orig;
+        btn.disabled  = false;
+        alert('Une erreur est survenue. Veuillez réessayer ou nous appeler au 04 73 86 57 05.');
+    });
+});
+</script>
+
+</body>
+</html>

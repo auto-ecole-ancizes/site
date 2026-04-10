@@ -1182,6 +1182,57 @@
     .scroll-top:hover { transform: translateY(-4px); background: var(--orange-dark); }
 
     /* ── RESPONSIVE ───────────────────────── */
+    /* ── MINI-JEU ────────────────────────── */
+    #gametrigger {
+        cursor: pointer; position: relative;
+        height: 54px; overflow: hidden;
+        transition: height 0.3s ease;
+    }
+    #gametrigger.game-active { height: 150px; }
+    #gametrigger::before {
+        content: '🎮 Cliquez pour jouer !';
+        position: absolute; left: 50%; top: 50%;
+        transform: translate(-50%,-50%);
+        font-size: 11px; font-weight: 700;
+        color: rgba(255,255,255,0.7);
+        letter-spacing: 1px; text-transform: uppercase;
+        pointer-events: none; white-space: nowrap;
+        opacity: 0; transition: opacity 0.3s; z-index: 2;
+    }
+    #gametrigger:hover:not(.game-active)::before { opacity: 1; }
+    #gameCanvas {
+        position: absolute;
+        top: 0; left: 0;
+        display: none;
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+    #gametrigger.game-active .divider-car { display: none; }
+    #gametrigger.game-active #gameCanvas  { display: block; }
+
+    #gameNameInput {
+        display: none; position: absolute;
+        top: 50%; left: 50%; transform: translate(-50%,-50%);
+        z-index: 20; text-align: center;
+        background: rgba(14,45,34,0.93);
+        border: 1.5px solid rgba(255,255,255,0.25);
+        border-radius: 10px; padding: 14px 22px;
+        font-family: 'Poppins', sans-serif; color: white; white-space: nowrap;
+    }
+    #gameNameInput p   { font-size: 13px; font-weight: 700; margin-bottom: 10px; color: #e8572a; }
+    #gameNameInput input {
+        background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.35);
+        border-radius: 6px; color: white; padding: 5px 10px;
+        font-size: 13px; font-family: 'Poppins', sans-serif;
+        outline: none; width: 150px; margin-right: 8px;
+    }
+    #gameNameInput input::placeholder { color: rgba(255,255,255,0.4); }
+    #gameNameInput button {
+        background: #e8572a; border: none; border-radius: 6px;
+        color: white; font-weight: 700; font-size: 13px;
+        padding: 6px 14px; cursor: pointer; font-family: 'Poppins', sans-serif;
+    }
+
     @media (max-width: 1100px) {
         .formations-grid { grid-template-columns: repeat(2,1fr); }
         .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
@@ -1374,7 +1425,14 @@
 </section>
 
 
-<div class="road-divider rd-car rd-dark-to-light rd-bordeaux"></div>
+<div class="road-divider rd-car rd-dark-to-light rd-bordeaux" id="gametrigger" title="Cliquez pour jouer !">
+    <canvas id="gameCanvas" width="750" height="180"></canvas>
+    <div id="gameNameInput">
+        <p>🏆 Nouveau record !</p>
+        <input id="gamePlayerName" type="text" maxlength="20" placeholder="Votre prénom…">
+        <button id="gameNameOk">OK</button>
+    </div>
+</div>
 
 <!-- ═══════════════════════════════════════
      À PROPOS
@@ -2137,6 +2195,398 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
         alert('Une erreur est survenue. Veuillez réessayer ou nous appeler au 04 73 86 57 05.');
     });
 });
+</script>
+
+<!-- Mini-jeu voiture -->
+<script>
+(function() {
+    const canvas   = document.getElementById('gameCanvas');
+    const ctx      = canvas.getContext('2d');
+    const trigger  = document.getElementById('gametrigger');
+
+    // W/H recalculés à l'ouverture selon la taille réelle du diviseur
+    let W = 750, H = 150, GROUND = H - 18;
+    const CAR_X      = 80;
+    const GRAVITY    = 0.58;
+    const JUMP_FORCE = -10.5;
+    const CAR_SCALE  = 0.65;          // voiture à 65% du SVG original
+    const CAR_BOTTOM = 31;            // 47 * 0.65 = 30.5 → fond de roue
+    const CAR_W      = 66;            // 101 * 0.65
+
+    // États : PLAY | DEAD | LEADERBOARD
+    let state = 'PLAY';
+    let score, speed, frame, carY, carVY, jumping, dblJumped, obstacles, nextObs;
+
+    // ── CLASSEMENT (localStorage) ──
+    function getLB() {
+        try { return JSON.parse(localStorage.getItem('ancizes_lb') || '[]'); }
+        catch(e) { return []; }
+    }
+    function addToLB(name, sc) {
+        const lb = getLB();
+        lb.push({ name: (name || 'Anonyme').trim().slice(0,20) || 'Anonyme', score: sc });
+        lb.sort((a, b) => b.score - a.score);
+        lb.splice(10);
+        localStorage.setItem('ancizes_lb', JSON.stringify(lb));
+    }
+    function getBest() {
+        const lb = getLB(); return lb.length ? lb[0].score : 0;
+    }
+
+    // Formulaire prénom
+    const nameBox = document.getElementById('gameNameInput');
+    const nameInp = document.getElementById('gamePlayerName');
+    document.getElementById('gameNameOk').addEventListener('click', confirmName);
+    nameInp.addEventListener('keydown', e => { if (e.key === 'Enter') confirmName(); });
+
+    function confirmName() {
+        addToLB(nameInp.value, score);
+        nameBox.style.display = 'none';
+        state = 'LEADERBOARD';
+        window._gameAnim = requestAnimationFrame(loop);
+    }
+
+    trigger.addEventListener('click', openGame);
+
+    let _dpr = 1;
+
+    function openGame() {
+        if (trigger.classList.contains('game-active')) return;
+        trigger.classList.add('game-active');
+        // On attend la fin de la transition CSS avant de dimensionner le canvas
+        trigger.addEventListener('transitionend', function init() {
+            trigger.removeEventListener('transitionend', init);
+            _dpr = window.devicePixelRatio || 1;
+            W = trigger.clientWidth  || 750;
+            H = trigger.clientHeight || 150;
+            canvas.width  = Math.round(W * _dpr);
+            canvas.height = Math.round(H * _dpr);
+            canvas.style.width  = W + 'px';
+            canvas.style.height = H + 'px';
+            GROUND = H - 18;
+            reset();
+        });
+    }
+
+    function reset() {
+        state = 'PLAY';
+        score = 0; speed = 5; frame = 0;
+        carY = GROUND - CAR_BOTTOM; carVY = 0;
+        jumping = false; dblJumped = false;
+        obstacles = []; nextObs = 100;
+        cancelAnimationFrame(window._gameAnim);
+        window._gameAnim = requestAnimationFrame(loop);
+    }
+
+    function jump() {
+        if (state === 'DEAD' || state === 'LEADERBOARD') { reset(); return; }
+        if (!jumping) {
+            carVY = JUMP_FORCE; jumping = true;
+        } else if (!dblJumped) {
+            carVY = JUMP_FORCE * 0.82; dblJumped = true;
+        }
+    }
+
+    // Controls
+    document.addEventListener('keydown', e => {
+        if (!trigger.classList.contains('game-active')) return;
+        if (e.code === 'Space' || e.code === 'ArrowUp') { e.preventDefault(); jump(); }
+        if (e.code === 'Escape') { trigger.classList.remove('game-active'); cancelAnimationFrame(window._gameAnim); }
+    });
+    canvas.addEventListener('click', jump);
+    canvas.addEventListener('touchstart', e => { e.preventDefault(); jump(); }, { passive: false });
+
+    // Obstacles
+    const TYPES = ['lapin','lapin','pothole','panneau','cone','lapin','cone'];
+
+    function spawn() {
+        const type = TYPES[Math.floor(Math.random() * TYPES.length)];
+        let w, h;
+        switch(type) {
+            case 'lapin':   w=20; h=32; break;
+            case 'pothole': w=42; h=13; break;
+            case 'panneau': w=18; h=44; break;
+            case 'cone':    w=22; h=30; break;
+        }
+        obstacles.push({ type, x: W + 30, y: GROUND - h, w, h });
+    }
+
+    // ── PALETTE ──
+    const C_CAR      = '#7a2420';               // bordeaux — voiture
+    const C_ORANGE   = '#e8572a';               // orange   — route, cônes, nids
+    const C_BORDEAUX = '#7a2420';               // bordeaux — lapins, panneaux
+    const C_INK      = 'rgba(255,255,255,0.9)'; // blanc    — HUD / textes
+    const C_DASH     = 'rgba(232,87,42,0.55)';  // orange semi-transparent — pointillés
+
+    // ── FOND : canvas transparent → le dégradé du bandeau reste visible ──
+    function drawBg() {
+        ctx.clearRect(0, 0, W, H);
+    }
+
+    // ── ROUTE ──
+    function drawRoad() {
+        ctx.strokeStyle = C_ORANGE;
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(0, GROUND); ctx.lineTo(W, GROUND); ctx.stroke();
+        // Pointillés qui défilent
+        ctx.fillStyle = C_DASH;
+        const dw = 38, gap = 32, tot = dw + gap;
+        const off = (frame * speed * 0.45) % tot;
+        for (let x = -off; x < W; x += tot) {
+            ctx.fillRect(x, GROUND + 9, dw, 3);
+        }
+    }
+
+    // ── VOITURE (même SVG que le site, en filaire) ──
+    function drawCar(x, y) {
+        const s = CAR_SCALE;
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.strokeStyle = C_CAR;
+        ctx.lineCap  = 'round';
+        ctx.lineJoin = 'round';
+
+        // Carrosserie
+        ctx.lineWidth = 3.5 * s;
+        ctx.beginPath();
+        ctx.moveTo(7*s,  35*s);
+        ctx.lineTo(7*s,  28*s);
+        ctx.quadraticCurveTo(8*s,  22*s, 15*s, 22*s);
+        ctx.lineTo(27*s, 22*s);
+        ctx.lineTo(38*s, 9*s);
+        ctx.quadraticCurveTo(42*s, 4*s, 52*s, 4*s);
+        ctx.quadraticCurveTo(62*s, 4*s, 66*s, 9*s);
+        ctx.lineTo(77*s, 22*s);
+        ctx.lineTo(90*s, 22*s);
+        ctx.quadraticCurveTo(100*s, 22*s, 101*s, 29*s);
+        ctx.lineTo(101*s, 35*s);
+        ctx.stroke();
+
+        // Bas de caisse
+        ctx.beginPath(); ctx.moveTo(7*s,  35*s); ctx.lineTo(20*s,  35*s); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(36*s, 35*s); ctx.lineTo(72*s,  35*s); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(87*s, 35*s); ctx.lineTo(101*s, 35*s); ctx.stroke();
+
+        // Roue avant
+        ctx.lineWidth = 3 * s;
+        ctx.beginPath(); ctx.arc(28*s, 37*s, 10*s, 0, Math.PI*2); ctx.stroke();
+        ctx.lineWidth = 2 * s;
+        ctx.beginPath(); ctx.arc(28*s, 37*s, 3.5*s, 0, Math.PI*2); ctx.stroke();
+
+        // Roue arrière
+        ctx.lineWidth = 3 * s;
+        ctx.beginPath(); ctx.arc(80*s, 37*s, 10*s, 0, Math.PI*2); ctx.stroke();
+        ctx.lineWidth = 2 * s;
+        ctx.beginPath(); ctx.arc(80*s, 37*s, 3.5*s, 0, Math.PI*2); ctx.stroke();
+
+        // Vitre
+        ctx.lineWidth = 2.8 * s;
+        ctx.beginPath();
+        ctx.moveTo(40*s, 22*s);
+        ctx.lineTo(47*s,  9*s);
+        ctx.quadraticCurveTo(50*s, 5*s, 54*s, 5*s);
+        ctx.quadraticCurveTo(58*s, 5*s, 61*s, 9*s);
+        ctx.lineTo(68*s, 22*s);
+        ctx.closePath();
+        ctx.stroke();
+
+        ctx.restore();
+    }
+
+    // ── OBSTACLES (croquis filaires) ──
+    function drawObs(o) {
+        ctx.save();
+        ctx.lineCap  = 'round';
+        ctx.lineJoin = 'round';
+
+        switch(o.type) {
+
+            case 'lapin': {
+                ctx.strokeStyle = '#1d5c48';
+                ctx.fillStyle   = '#1d5c48';
+                // Oreilles
+                ctx.lineWidth = 1.8;
+                // Oreilles (pleines)
+                ctx.beginPath(); ctx.ellipse(o.x+5,  o.y+4, 2.5, 7, -0.2, 0, Math.PI*2); ctx.fill();
+                ctx.beginPath(); ctx.ellipse(o.x+14, o.y+4, 2.5, 7,  0.2, 0, Math.PI*2); ctx.fill();
+                // Tête
+                ctx.beginPath(); ctx.arc(o.x+10, o.y+14, 7, 0, Math.PI*2); ctx.fill();
+                // Corps
+                ctx.beginPath(); ctx.ellipse(o.x+10, o.y+25, 8, 9, 0, 0, Math.PI*2); ctx.fill();
+                // Œil blanc
+                ctx.fillStyle = 'rgba(255,255,255,0.7)';
+                ctx.beginPath(); ctx.arc(o.x+13, o.y+12, 1.5, 0, Math.PI*2); ctx.fill();
+                ctx.fillStyle = '#1d5c48';
+                // Queue (petite)
+                ctx.beginPath(); ctx.arc(o.x+2, o.y+28, 3, 0, Math.PI*2); ctx.fill();
+                break;
+            }
+
+            case 'pothole': {
+                ctx.strokeStyle = C_ORANGE;
+                ctx.fillStyle   = C_ORANGE;
+                ctx.lineWidth = 2;
+                ctx.beginPath(); ctx.ellipse(o.x+21, o.y+6, 20, 6, 0, 0, Math.PI*2); ctx.stroke();
+                ctx.lineWidth = 1.5;
+                ctx.beginPath(); ctx.ellipse(o.x+21, o.y+6, 11, 3.5, 0, 0, Math.PI*2); ctx.stroke();
+                ctx.lineWidth = 1.5;
+                ctx.beginPath(); ctx.moveTo(o.x+12, o.y+2); ctx.lineTo(o.x+6,  o.y-4); ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(o.x+30, o.y+2); ctx.lineTo(o.x+36, o.y-3); ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(o.x+21, o.y+1); ctx.lineTo(o.x+21, o.y-5); ctx.stroke();
+                break;
+            }
+
+            case 'panneau': {
+                ctx.strokeStyle = C_BORDEAUX;
+                ctx.fillStyle   = C_BORDEAUX;
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(o.x+9, o.y+18);
+                ctx.lineTo(o.x+9, o.y+o.h);
+                ctx.stroke();
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                const pcx = o.x+9, pcy = o.y+10, pr = 9;
+                for(let i=0; i<8; i++){
+                    const a = (i/8)*Math.PI*2 - Math.PI/8;
+                    i===0 ? ctx.moveTo(pcx+pr*Math.cos(a), pcy+pr*Math.sin(a))
+                           : ctx.lineTo(pcx+pr*Math.cos(a), pcy+pr*Math.sin(a));
+                }
+                ctx.closePath(); ctx.stroke();
+                ctx.font = 'bold 5px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('STOP', pcx, pcy+2);
+                break;
+            }
+
+            case 'cone': {
+                ctx.strokeStyle = C_ORANGE;
+                ctx.fillStyle   = C_ORANGE;
+                const mx = o.x + o.w/2;
+                // Corps triangulaire plein
+                ctx.beginPath();
+                ctx.moveTo(mx,      o.y);
+                ctx.lineTo(o.x+o.w, o.y+o.h-6);
+                ctx.lineTo(o.x,     o.y+o.h-6);
+                ctx.closePath(); ctx.fill();
+                // Base
+                ctx.beginPath();
+                ctx.rect(o.x-1, o.y+o.h-7, o.w+2, 7);
+                ctx.fill();
+                // Bande blanche
+                ctx.strokeStyle = 'rgba(255,255,255,0.85)';
+                ctx.lineWidth = 3;
+                const sy = o.y + o.h*0.43;
+                const sw = o.w * 0.58;
+                ctx.beginPath();
+                ctx.moveTo(mx - sw/2, sy);
+                ctx.lineTo(mx + sw/2, sy);
+                ctx.stroke();
+                break;
+            }
+        }
+        ctx.restore();
+    }
+
+    // ── HUD / ÉCRANS ──
+    function drawHUD() {
+        ctx.fillStyle = C_INK;
+        ctx.font = 'bold 12px Poppins, sans-serif';
+        ctx.textAlign = 'right';
+        ctx.fillText('Score : ' + score + '   Record : ' + getBest(), W - 10, 18);
+    }
+
+    function drawIdle() {
+        // Pas d'écran idle — le jeu démarre directement au 1er clic
+    }
+
+    function drawDead() {
+        ctx.fillStyle = 'rgba(0,0,0,0.45)';
+        ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = 'white';
+        ctx.font = 'bold 20px Poppins, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('GAME OVER', W/2, H/2 - 12);
+        ctx.font = '13px Poppins, sans-serif';
+        ctx.fillStyle = 'rgba(255,255,255,0.85)';
+        ctx.fillText('Score : ' + score + '   |   Meilleur : ' + hiScore, W/2, H/2 + 5);
+        ctx.lineWidth = 2; ctx.strokeStyle = 'white';
+        const bx = W/2-58, by = H/2+16, bw = 116, bh = 28;
+        ctx.beginPath(); ctx.roundRect(bx, by, bw, bh, 6); ctx.stroke();
+        ctx.fillStyle = 'white';
+        ctx.font = 'bold 12px Poppins, sans-serif';
+        ctx.fillText('Rejouer', W/2, by + 19);
+    }
+
+    function collides() {
+        // Hitbox voiture à scale 0.65
+        const cx = CAR_X + 4, cy = carY + 2, cw = 57, ch = 24;
+        for(const o of obstacles) {
+            const m = 5;
+            if (cx+cw-m > o.x+m && cx+m < o.x+o.w-m && cy+ch-m > o.y+m && cy+m < o.y+o.h-m)
+                return true;
+        }
+        return false;
+    }
+
+    function loop() {
+        ctx.setTransform(_dpr, 0, 0, _dpr, 0, 0);
+        ctx.clearRect(0, 0, W, H);
+        drawBg();
+        drawRoad();
+
+        if (state === 'PLAY') {
+            frame++;
+            score = Math.floor(frame / 7);
+            speed = 5 + Math.floor(score / 150) * 0.6;
+
+            // Physics
+            carVY += GRAVITY;
+            carY  += carVY;
+            if (carY >= GROUND - CAR_BOTTOM) {
+                carY = GROUND - CAR_BOTTOM; carVY = 0;
+                jumping = false; dblJumped = false;
+            }
+
+            // Spawn
+            nextObs--;
+            if (nextObs <= 0) {
+                spawn();
+                // Espacement varié : parfois serré, parfois aéré, toujours sautable
+                const minGap = Math.max(55, 80 - Math.floor(score / 200) * 5);
+                const roll   = Math.random();
+                const extra  = roll < 0.25 ? 0              // 25% : serré
+                             : roll < 0.65 ? Math.random() * 80   // 40% : normal
+                             :               120 + Math.random() * 100; // 35% : large
+                nextObs = Math.floor(minGap + extra);
+            }
+
+            obstacles.forEach(o => o.x -= speed);
+            obstacles = obstacles.filter(o => o.x > -80);
+
+            if (collides()) {
+                if (score > getBest()) {
+                    // Nouveau record : on pause et on demande le prénom
+                    state = 'DEAD';
+                    cancelAnimationFrame(window._gameAnim);
+                    nameInp.value = '';
+                    nameBox.style.display = 'block';
+                    nameInp.focus();
+                } else {
+                    state = 'DEAD';
+                }
+            }
+        }
+
+        obstacles.forEach(drawObs);
+        drawCar(CAR_X, carY);
+        if (state === 'PLAY')        drawHUD();
+        if (state === 'DEAD')        drawDead();
+        if (state === 'LEADERBOARD') drawLeaderboard();
+
+        window._gameAnim = requestAnimationFrame(loop);
+    }
+})();
 </script>
 
 </body>

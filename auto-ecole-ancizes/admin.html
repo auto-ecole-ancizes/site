@@ -325,6 +325,25 @@
                     <label class="field-label">Paragraphe 2</label>
                     <textarea class="field-textarea" data-field="about-p2"></textarea>
                 </div>
+                <div class="card-group" style="margin-top:8px">
+                    <div class="card-group-title">✅ Points forts (checklist)</div>
+                    <div class="field-group"><label class="field-label">Point 1</label><input type="text" class="field-input" data-field="check-1"></div>
+                    <div class="field-group"><label class="field-label">Point 2</label><input type="text" class="field-input" data-field="check-2"></div>
+                    <div class="field-group"><label class="field-label">Point 3</label><input type="text" class="field-input" data-field="check-3"></div>
+                    <div class="field-group"><label class="field-label">Point 4</label><input type="text" class="field-input" data-field="check-4"></div>
+                    <div class="field-group"><label class="field-label">Point 5</label><input type="text" class="field-input" data-field="check-5"></div>
+                </div>
+                <div class="card-group">
+                    <div class="card-group-title">👥 Équipe</div>
+                    <div class="field-row">
+                        <div class="field-group"><label class="field-label">Prénom 1</label><input type="text" class="field-input" data-field="team-1-name"></div>
+                        <div class="field-group"><label class="field-label">Rôle 1</label><input type="text" class="field-input" data-field="team-1-role"></div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-group"><label class="field-label">Prénom 2</label><input type="text" class="field-input" data-field="team-2-name"></div>
+                        <div class="field-group"><label class="field-label">Rôle 2</label><input type="text" class="field-input" data-field="team-2-role"></div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -395,15 +414,113 @@
                     </div>
                 </div>
                 <div class="card-group">
-                    <div class="card-group-title">Formation 6 — Code de la Route</div>
+                    <div class="card-group-title">Formation 6 — AM Quadricycle</div>
                     <div class="field-group">
                         <label class="field-label">Titre</label>
-                        <input type="text" class="field-input" data-field="form-6-title">
+                        <input type="text" class="field-input" data-field="form-7-title">
                     </div>
                     <div class="field-group">
                         <label class="field-label">Description</label>
-                        <textarea class="field-textarea" data-field="form-6-desc"></textarea>
+                        <textarea class="field-textarea" data-field="form-7-desc"></textarea>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FINANCEMENTS -->
+        <div class="cms-section">
+            <div class="cms-section-header" onclick="toggleSection(this)">
+                <div class="cms-section-icon">💳</div>
+                <div>
+                    <div class="cms-section-title">Financements</div>
+                    <div class="cms-section-desc">Les 2 modes de financement</div>
+                </div>
+                <span class="cms-section-chevron">▼</span>
+            </div>
+            <div class="cms-section-body">
+                <div class="card-group">
+                    <div class="card-group-title">Financement 1</div>
+                    <div class="field-group"><label class="field-label">Titre</label><input type="text" class="field-input" data-field="fin-1-title"></div>
+                    <div class="field-group"><label class="field-label">Description</label><textarea class="field-textarea" data-field="fin-1-desc"></textarea></div>
+                </div>
+                <div class="card-group">
+                    <div class="card-group-title">Financement 2</div>
+                    <div class="field-group"><label class="field-label">Titre</label><input type="text" class="field-input" data-field="fin-2-title"></div>
+                    <div class="field-group"><label class="field-label">Description</label><textarea class="field-textarea" data-field="fin-2-desc"></textarea></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- POURQUOI NOUS -->
+        <div class="cms-section">
+            <div class="cms-section-header" onclick="toggleSection(this)">
+                <div class="cms-section-icon">⭐</div>
+                <div>
+                    <div class="cms-section-title">Pourquoi nous choisir</div>
+                    <div class="cms-section-desc">Les 6 arguments</div>
+                </div>
+                <span class="cms-section-chevron">▼</span>
+            </div>
+            <div class="cms-section-body">
+                <div class="card-group">
+                    <div class="card-group-title">Argument 1</div>
+                    <div class="field-row">
+                        <div class="field-group"><label class="field-label">Titre</label><input type="text" class="field-input" data-field="why-1-title"></div>
+                        <div class="field-group"><label class="field-label">Description</label><input type="text" class="field-input" data-field="why-1-desc"></div>
+                    </div>
+                </div>
+                <div class="card-group">
+                    <div class="card-group-title">Argument 2</div>
+                    <div class="field-row">
+                        <div class="field-group"><label class="field-label">Titre</label><input type="text" class="field-input" data-field="why-2-title"></div>
+                        <div class="field-group"><label class="field-label">Description</label><input type="text" class="field-input" data-field="why-2-desc"></div>
+                    </div>
+                </div>
+                <div class="card-group">
+                    <div class="card-group-title">Argument 3</div>
+                    <div class="field-row">
+                        <div class="field-group"><label class="field-label">Titre</label><input type="text" class="field-input" data-field="why-3-title"></div>
+                        <div class="field-group"><label class="field-label">Description</label><input type="text" class="field-input" data-field="why-3-desc"></div>
+                    </div>
+                </div>
+                <div class="card-group">
+                    <div class="card-group-title">Argument 4</div>
+                    <div class="field-row">
+                        <div class="field-group"><label class="field-label">Titre</label><input type="text" class="field-input" data-field="why-4-title"></div>
+                        <div class="field-group"><label class="field-label">Description</label><input type="text" class="field-input" data-field="why-4-desc"></div>
+                    </div>
+                </div>
+                <div class="card-group">
+                    <div class="card-group-title">Argument 5</div>
+                    <div class="field-row">
+                        <div class="field-group"><label class="field-label">Titre</label><input type="text" class="field-input" data-field="why-5-title"></div>
+                        <div class="field-group"><label class="field-label">Description</label><input type="text" class="field-input" data-field="why-5-desc"></div>
+                    </div>
+                </div>
+                <div class="card-group">
+                    <div class="card-group-title">Argument 6</div>
+                    <div class="field-row">
+                        <div class="field-group"><label class="field-label">Titre</label><input type="text" class="field-input" data-field="why-6-title"></div>
+                        <div class="field-group"><label class="field-label">Description</label><input type="text" class="field-input" data-field="why-6-desc"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="cms-section">
+            <div class="cms-section-header" onclick="toggleSection(this)">
+                <div class="cms-section-icon">📄</div>
+                <div>
+                    <div class="cms-section-title">Pied de page</div>
+                    <div class="cms-section-desc">Description en bas du site</div>
+                </div>
+                <span class="cms-section-chevron">▼</span>
+            </div>
+            <div class="cms-section-body">
+                <div class="field-group">
+                    <label class="field-label">Description</label>
+                    <textarea class="field-textarea" data-field="footer-desc"></textarea>
                 </div>
             </div>
         </div>
@@ -533,6 +650,13 @@ const DEFAULTS = {
     "stat-4-num":     "2",    "stat-4-label": "Moniteurs diplômés",
     "about-p1":       "Située au cœur des Ancizes-Comps, notre auto-école vous accueille dans un cadre bienveillant et professionnel. Nous mettons un point d'honneur à proposer une formation de qualité, entièrement adaptée à chaque élève.",
     "about-p2":       "Notre équipe de moniteurs diplômés vous accompagne à chaque étape de votre parcours, du code de la route jusqu'à l'examen pratique, avec patience et pédagogie.",
+    "check-1": "Formateurs titulaires du BEPECASER ou titre pro ECSR",
+    "check-2": "Évaluation de départ et suivi personnalisé",
+    "check-3": "Véhicules récents et bien équipés",
+    "check-4": "Horaires flexibles en semaine, soirée et samedi",
+    "check-5": "Plateforme code de la route en ligne 24h/24",
+    "team-1-name": "Clémence", "team-1-role": "Gérante & Monitrice",
+    "team-2-name": "Kevin",    "team-2-role": "Moniteur",
     "form-1-title":   "Permis B",                  "form-1-desc": "La formation classique pour conduire une voiture. Cours théoriques et pratiques, avec accompagnement jusqu'à l'examen.",
     "form-2-title":   "Conduite Accompagnée",      "form-2-desc": "Dès 15 ans, commencez à conduire avec un accompagnateur agréé. La meilleure façon d'aborder l'examen sereinement.",
     "form-3-title":   "Permis Boite Automatique",  "form-3-desc": "Idéal pour conduire en boite automatique. Formation allégée à partir de 13h, accessible à tous les profils.",
@@ -544,6 +668,15 @@ const DEFAULTS = {
     "tarif-3-price":  "1160",
     "tarif-4-price":  "1346",
     "tarif-5-price":  "500",
+    "fin-1-title": "Permis à 1€/jour",  "fin-1-desc": "Pour les jeunes de 15 à 25 ans. Un prêt à taux zéro accordé par l'État via les banques partenaires pour financer votre permis B ou AAC.",
+    "fin-2-title": "Pass Région",       "fin-2-desc": "La Région Auvergne-Rhône-Alpes propose des aides financières pour le permis de conduire via le Pass Région. Renseignez-vous auprès de votre lycée ou mission locale.",
+    "why-1-title": "Taux de réussite élevé",   "why-1-desc": "Nos méthodes pédagogiques modernes et notre suivi individuel garantissent un excellent taux de réussite dès le premier passage.",
+    "why-2-title": "Formateurs certifiés",      "why-2-desc": "Tous nos moniteurs sont diplômés d'État (BEPECASER ou Titre Pro ECSR) et régulièrement formés aux nouvelles pratiques pédagogiques.",
+    "why-3-title": "Horaires flexibles",        "why-3-desc": "Créneaux disponibles en semaine, en soirée et le samedi pour s'adapter à votre vie professionnelle et personnelle.",
+    "why-4-title": "Véhicules modernes",        "why-4-desc": "Nos véhicules d'apprentissage sont récents, bien entretenus et équipés des dernières technologies de sécurité active.",
+    "why-5-title": "Code en ligne 24h/24",      "why-5-desc": "Accédez à notre plateforme de code à tout moment pour vous entraîner à votre rythme, depuis n'importe quel appareil.",
+    "why-6-title": "Ambiance bienveillante",    "why-6-desc": "Un cadre rassurant où chaque élève progresse à son rythme, en confiance. Votre réussite est notre fierté.",
+    "footer-desc": "Votre auto-école de confiance aux Ancizes-Comps. Formateurs certifiés, pédagogie bienveillante et taux de réussite élevé depuis notre ouverture.",
     "contact-phone":  "04 73 86 57 05",
     "contact-email":  "autoecoledesancizes@gmail.com",
     "contact-address":"25 Avenue du Plan d'Eau, 63770 Les Ancizes-Comps",

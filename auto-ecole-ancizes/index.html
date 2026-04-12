@@ -2167,7 +2167,7 @@ new Swiper('.tarifs-swiper', {
  *    → notez votre TEMPLATE_ID et votre PUBLIC_KEY
  * 4. Remplacez les 3 valeurs ci-dessous.
  */
-emailjs.init('VOTRE_PUBLIC_KEY');   // ← remplacer
+emailjs.init('sncYKhKrEvnQ70WZK');
 
 document.getElementById('contactForm').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -2178,7 +2178,7 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
     btn.disabled  = true;
 
     const d = new FormData(this);
-    emailjs.send('VOTRE_SERVICE_ID', 'VOTRE_TEMPLATE_ID', {  // ← remplacer
+    emailjs.send('service_v60kk0m', 'template_e4c3lw9', {
         from_name:  `${d.get('prenom')} ${d.get('nom')}`,
         from_email: d.get('email'),
         phone:      d.get('telephone') || 'Non renseigné',

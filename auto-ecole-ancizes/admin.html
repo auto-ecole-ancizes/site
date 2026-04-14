@@ -507,6 +507,40 @@
             </div>
         </div>
 
+        <!-- RÉSEAUX SOCIAUX -->
+        <div class="cms-section">
+            <div class="cms-section-header" onclick="toggleSection(this)">
+                <div class="cms-section-icon">📱</div>
+                <div>
+                    <div class="cms-section-title">Réseaux sociaux</div>
+                    <div class="cms-section-desc">Titre, textes et liens Facebook / Instagram</div>
+                </div>
+                <span class="cms-section-chevron">▼</span>
+            </div>
+            <div class="cms-section-body">
+                <div class="field-group">
+                    <label class="field-label">Titre de la section</label>
+                    <input class="field-input" data-field="social-title" type="text">
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Facebook — Texte</label>
+                    <textarea class="field-textarea" data-field="social-fb-text"></textarea>
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Facebook — Lien (URL)</label>
+                    <input class="field-input" data-field="social-fb-url" type="url">
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Instagram — Texte</label>
+                    <textarea class="field-textarea" data-field="social-ig-text"></textarea>
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Instagram — Lien (URL)</label>
+                    <input class="field-input" data-field="social-ig-url" type="url">
+                </div>
+            </div>
+        </div>
+
         <!-- FOOTER -->
         <div class="cms-section">
             <div class="cms-section-header" onclick="toggleSection(this)">
@@ -676,6 +710,11 @@ const DEFAULTS = {
     "why-4-title": "Véhicules modernes",        "why-4-desc": "Nos véhicules d'apprentissage sont récents, bien entretenus et équipés des dernières technologies de sécurité active.",
     "why-5-title": "Code en ligne 24h/24",      "why-5-desc": "Accédez à notre plateforme de code à tout moment pour vous entraîner à votre rythme, depuis n'importe quel appareil.",
     "why-6-title": "Ambiance bienveillante",    "why-6-desc": "Un cadre rassurant où chaque élève progresse à son rythme, en confiance. Votre réussite est notre fierté.",
+    "social-title":   "Nous suivre sur les réseaux",
+    "social-fb-text": "Suivez notre actualité, conseils de conduite et promotions sur Facebook.",
+    "social-fb-url":  "https://www.facebook.com/profile.php?id=61583758892344",
+    "social-ig-text": "Photos, coulisses et moments de vie de l'auto-école sur Instagram.",
+    "social-ig-url":  "https://www.instagram.com/autoecoledesancizes?igsh=NjI4MWp6cmVudHlm",
     "footer-desc": "Votre auto-école de confiance aux Ancizes-Comps. Formateurs certifiés, pédagogie bienveillante et taux de réussite élevé depuis notre ouverture.",
     "contact-phone":  "04 73 86 57 05",
     "contact-email":  "autoecoledesancizes@gmail.com",

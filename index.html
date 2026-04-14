@@ -214,8 +214,12 @@
         max-width: 1200px; margin: 0 auto;
         padding: 130px 30px 100px;
         display: grid; grid-template-columns: 1fr 1fr;
-        gap: 60px; align-items: center;
+        gap: 60px; align-items: stretch;
         position: relative; z-index: 1;
+    }
+
+    .hero-content {
+        display: flex; flex-direction: column;
     }
 
     .hero-badge {
@@ -265,6 +269,7 @@
 
     .hero-buttons {
         display: flex; gap: 16px; flex-wrap: wrap;
+        margin-top: auto; padding-top: 32px;
         animation: fadeSlideUp 0.7s ease 0.45s both;
     }
 
@@ -300,9 +305,34 @@
     }
 
     .hero-image-wrap {
-        display: flex; justify-content: center; align-items: center;
+        display: flex; flex-direction: column; align-items: center;
         position: relative;
         animation: fadeSlideUp 0.7s ease 0.25s both;
+    }
+
+    .hero-image-inner {
+        flex: 1; display: flex; align-items: center; justify-content: center;
+        position: relative; width: 100%;
+    }
+
+    .hero-social-icons {
+        display: flex; gap: 20px; justify-content: center; align-items: center;
+        position: relative; z-index: 1;
+        padding-top: 18px;
+    }
+    .hero-social-icons a {
+        display: flex; align-items: center; justify-content: center;
+        width: 48px; height: 48px;
+        border-radius: 12px;
+        font-size: 1.5rem;
+        color: #fff;
+        transition: transform 0.2s, opacity 0.2s;
+        text-decoration: none;
+    }
+    .hero-social-icons a:hover { transform: scale(1.12); opacity: 0.85; }
+    .hero-social-icons a.fb  { background: #1877f2; }
+    .hero-social-icons a.ig  {
+        background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%);
     }
 
     .hero-glow {
@@ -1413,7 +1443,7 @@
 
     <div class="hero-container">
         <!-- Content -->
-        <div>
+        <div class="hero-content">
             <div class="hero-badge">
                 <i class="fas fa-map-marker-alt"></i>
                 <span data-cms="hero-badge">Grande Ouverture — Les Ancizes-Comps</span>
@@ -1438,8 +1468,18 @@
 
         <!-- Logo image -->
         <div class="hero-image-wrap">
-            <div class="hero-glow"></div>
-            <img src="images/logo-square.jpg" alt="Auto-École des Ancizes" class="hero-logo-img">
+            <div class="hero-image-inner">
+                <div class="hero-glow"></div>
+                <img src="images/logo-square.jpg" alt="Auto-École des Ancizes" class="hero-logo-img">
+            </div>
+            <div class="hero-social-icons">
+                <a class="fb" href="https://www.facebook.com/profile.php?id=61583758892344" data-cms-href="social-fb-url" target="_blank" rel="noopener" title="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a class="ig" href="https://www.instagram.com/autoecoledesancizes?igsh=NjI4MWp6cmVudHlm" data-cms-href="social-ig-url" target="_blank" rel="noopener" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
         </div>
     </div>
 
@@ -2275,6 +2315,42 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
 });
 </script>
 
+<!-- Classement Firebase (jeu) -->
+<script type="module">
+import { getApps, initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+
+const _cfg = {
+    apiKey: "AIzaSyDOFlB2CxuOIzaawW-qS958zeuyDYadmMM",
+    authDomain: "auto-ecole-ancizes.firebaseapp.com",
+    projectId: "auto-ecole-ancizes",
+    storageBucket: "auto-ecole-ancizes.firebasestorage.app",
+    messagingSenderId: "733931346601",
+    appId: "1:733931346601:web:1300a311a6b8624920e7b8"
+};
+const _app = getApps().length ? getApps()[0] : initializeApp(_cfg);
+const _db  = getFirestore(_app);
+
+window.gameLB = {
+    async save(name, sc) {
+        try {
+            await addDoc(collection(_db, 'leaderboard'), {
+                name: (name || 'Anonyme').trim().slice(0, 20) || 'Anonyme',
+                score: Number(sc),
+                ts: Date.now()
+            });
+        } catch(e) { console.warn('LB save:', e); }
+    },
+    async load() {
+        try {
+            const q = query(collection(_db, 'leaderboard'), orderBy('score', 'desc'), limit(10));
+            const snap = await getDocs(q);
+            return snap.docs.map(d => ({ name: d.data().name, score: d.data().score }));
+        } catch(e) { return []; }
+    }
+};
+</script>
+
 <!-- Mini-jeu voiture -->
 <script>
 (function() {
@@ -2295,20 +2371,11 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
     let state = 'PLAY';
     let score, speed, frame, carY, carVY, jumping, dblJumped, obstacles, nextObs;
 
-    // ── CLASSEMENT (localStorage) ──
-    function getLB() {
-        try { return JSON.parse(localStorage.getItem('ancizes_lb') || '[]'); }
-        catch(e) { return []; }
-    }
-    function addToLB(name, sc) {
-        const lb = getLB();
-        lb.push({ name: (name || 'Anonyme').trim().slice(0,20) || 'Anonyme', score: sc });
-        lb.sort((a, b) => b.score - a.score);
-        lb.splice(10);
-        localStorage.setItem('ancizes_lb', JSON.stringify(lb));
-    }
-    function getBest() {
-        const lb = getLB(); return lb.length ? lb[0].score : 0;
+    // ── CLASSEMENT (Firebase) ──
+    let _lb = [];
+    function getBest() { return _lb.length ? _lb[0].score : 0; }
+    async function refreshLB() {
+        if (window.gameLB) _lb = await window.gameLB.load();
     }
 
     // Formulaire prénom
@@ -2317,8 +2384,9 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
     document.getElementById('gameNameOk').addEventListener('click', confirmName);
     nameInp.addEventListener('keydown', e => { if (e.key === 'Enter') confirmName(); });
 
-    function confirmName() {
-        addToLB(nameInp.value, score);
+    async function confirmName() {
+        if (window.gameLB) await window.gameLB.save(nameInp.value, score);
+        await refreshLB();
         nameBox.style.display = 'none';
         state = 'LEADERBOARD';
         window._gameAnim = requestAnimationFrame(loop);
@@ -2331,6 +2399,7 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
     function openGame() {
         if (trigger.classList.contains('game-active')) return;
         trigger.classList.add('game-active');
+        refreshLB();
         // On attend la fin de la transition CSS avant de dimensionner le canvas
         trigger.addEventListener('transitionend', function init() {
             trigger.removeEventListener('transitionend', init);
@@ -2578,6 +2647,54 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
         // Pas d'écran idle — le jeu démarre directement au 1er clic
     }
 
+    function drawLeaderboard() {
+        // Fond semi-transparent vert foncé
+        ctx.fillStyle = 'rgba(14,45,34,0.93)';
+        ctx.fillRect(0, 0, W, H);
+
+        const medals = ['🥇','🥈','🥉','4e','5e'];
+        const top    = _lb.slice(0, 5);
+        const colW   = Math.min(320, W * 0.28);
+        const lx     = 28; // colonne gauche
+
+        // Titre
+        ctx.fillStyle  = '#f5c542';
+        ctx.font       = 'bold 13px Poppins, sans-serif';
+        ctx.textAlign  = 'left';
+        ctx.fillText('🏆 CLASSEMENT', lx, 22);
+
+        if (top.length === 0) {
+            ctx.fillStyle = 'rgba(255,255,255,0.5)';
+            ctx.font      = '12px Poppins, sans-serif';
+            ctx.fillText('Aucun score encore — soyez le premier !', lx, 48);
+        } else {
+            top.forEach((entry, i) => {
+                const y = 42 + i * 20;
+                ctx.fillStyle = i === 0 ? '#ffd700' : i === 1 ? '#c0c0c0' : i === 2 ? '#cd7f32' : 'rgba(255,255,255,0.75)';
+                ctx.font      = (i === 0 ? 'bold ' : '') + '12px Poppins, sans-serif';
+                ctx.textAlign = 'left';
+                ctx.fillText(medals[i] + '  ' + entry.name, lx, y);
+                ctx.textAlign = 'right';
+                ctx.fillText(entry.score + ' pts', lx + colW, y);
+            });
+        }
+
+        // Score de cette partie
+        ctx.fillStyle = 'rgba(255,255,255,0.55)';
+        ctx.font      = '11px Poppins, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('Votre score : ' + score + ' pts', W / 2, H / 2 - 4);
+
+        // Bouton rejouer
+        const bw = 180, bh = 30, bx = W/2 - bw/2, by = H/2 + 8;
+        ctx.fillStyle = 'rgba(232,87,42,0.9)';
+        ctx.beginPath(); ctx.roundRect(bx, by, bw, bh, 6); ctx.fill();
+        ctx.fillStyle = 'white';
+        ctx.font      = 'bold 12px Poppins, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('Rejouer  [Espace]', W/2, by + 20);
+    }
+
     function drawDead() {
         ctx.fillStyle = 'rgba(0,0,0,0.45)';
         ctx.fillRect(0, 0, W, H);
@@ -2587,7 +2704,7 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
         ctx.fillText('GAME OVER', W/2, H/2 - 12);
         ctx.font = '13px Poppins, sans-serif';
         ctx.fillStyle = 'rgba(255,255,255,0.85)';
-        ctx.fillText('Score : ' + score + '   |   Meilleur : ' + hiScore, W/2, H/2 + 5);
+        ctx.fillText('Score : ' + score + '   |   Record : ' + getBest(), W/2, H/2 + 5);
         ctx.lineWidth = 2; ctx.strokeStyle = 'white';
         const bx = W/2-58, by = H/2+16, bw = 116, bh = 28;
         ctx.beginPath(); ctx.roundRect(bx, by, bw, bh, 6); ctx.stroke();

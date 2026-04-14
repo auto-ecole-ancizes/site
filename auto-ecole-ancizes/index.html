@@ -1053,6 +1053,48 @@
     .map-wrap { height: 420px; }
     .map-wrap iframe { width: 100%; height: 100%; border: 0; display: block; }
 
+    /* ── RÉSEAUX SOCIAUX ─────────────────── */
+    .social-section {
+        background: var(--cream);
+        padding: 60px 0;
+        text-align: center;
+    }
+    .social-section .section-tag  { margin-bottom: 10px; }
+    .social-section .section-title { margin-bottom: 40px; }
+    .social-cards {
+        display: flex; gap: 28px; justify-content: center;
+        flex-wrap: wrap; max-width: 700px; margin: 0 auto;
+    }
+    .social-card {
+        background: white;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-md);
+        padding: 32px 36px;
+        flex: 1; min-width: 240px; max-width: 300px;
+        display: flex; flex-direction: column; align-items: center; gap: 14px;
+        text-decoration: none; color: inherit;
+        transition: var(--t);
+    }
+    .social-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .social-card-icon {
+        width: 56px; height: 56px; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 24px; color: white;
+    }
+    .social-card-icon.fb { background: #1877f2; }
+    .social-card-icon.ig { background: linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); }
+    .social-card h3 { font-size: 16px; font-weight: 700; color: var(--text-dark); margin: 0; }
+    .social-card p  { font-size: 13px; color: var(--text-light); margin: 0; line-height: 1.5; }
+    .social-card .btn-follow {
+        margin-top: 6px;
+        padding: 8px 22px;
+        border-radius: 30px;
+        font-size: 13px; font-weight: 600;
+        color: white; border: none; cursor: pointer;
+    }
+    .social-card.fb-card .btn-follow { background: #1877f2; }
+    .social-card.ig-card .btn-follow { background: linear-gradient(45deg,#f09433,#dc2743,#bc1888); }
+
     /* ── FOOTER ───────────────────────────── */
     footer {
         background: var(--green-darker);
@@ -1945,6 +1987,39 @@
 <div class="road-divider rd-line rd-orange"></div>
 
 <!-- ═══════════════════════════════════════
+     RÉSEAUX SOCIAUX
+════════════════════════════════════════ -->
+<section class="social-section">
+    <div class="section-wrap">
+        <p class="section-tag">Communauté</p>
+        <h2 class="section-title" data-cms="social-title">Nous suivre sur les réseaux</h2>
+        <div class="social-cards">
+
+            <a class="social-card fb-card"
+               href="https://www.facebook.com/profile.php?id=61583758892344"
+               data-cms-href="social-fb-url"
+               target="_blank" rel="noopener">
+                <div class="social-card-icon fb"><i class="fab fa-facebook-f"></i></div>
+                <h3>Facebook</h3>
+                <p data-cms="social-fb-text">Suivez notre actualité, conseils de conduite et promotions sur Facebook.</p>
+                <span class="btn-follow">Nous suivre</span>
+            </a>
+
+            <a class="social-card ig-card"
+               href="https://www.instagram.com/autoecoledesancizes?igsh=NjI4MWp6cmVudHlm"
+               data-cms-href="social-ig-url"
+               target="_blank" rel="noopener">
+                <div class="social-card-icon ig"><i class="fab fa-instagram"></i></div>
+                <h3>Instagram</h3>
+                <p data-cms="social-ig-text">Photos, coulisses et moments de vie de l'auto-école sur Instagram.</p>
+                <span class="btn-follow">Nous suivre</span>
+            </a>
+
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
      FOOTER
 ════════════════════════════════════════ -->
 <footer>
@@ -1959,8 +2034,8 @@
             </a>
             <p data-cms="footer-desc">Votre auto-école de confiance aux Ancizes-Comps. Formateurs certifiés, pédagogie bienveillante et taux de réussite élevé depuis notre ouverture.</p>
             <div class="footer-socials">
-                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/profile.php?id=61583758892344" data-cms-href="social-fb-url" aria-label="Facebook" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/autoecoledesancizes?igsh=NjI4MWp6cmVudHlm" data-cms-href="social-ig-url" aria-label="Instagram" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
 
@@ -2049,13 +2124,16 @@ const db  = getFirestore(app);
         document.querySelectorAll('[data-cms]').forEach(el => {
             const key = el.getAttribute('data-cms');
             if (data[key] === undefined) return;
-
-            // Cas spécial : stat numbers (met à jour data-target pour l'animation compteur)
             if (key.startsWith('stat-') && key.endsWith('-num')) {
                 el.setAttribute('data-target', data[key]);
             } else {
                 el.textContent = data[key];
             }
+        });
+        // Liens éditables (data-cms-href)
+        document.querySelectorAll('[data-cms-href]').forEach(el => {
+            const key = el.getAttribute('data-cms-href');
+            if (data[key] !== undefined) el.href = data[key];
         });
     } catch(e) {
         console.warn('CMS Firebase non disponible', e);

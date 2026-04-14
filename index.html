@@ -2370,6 +2370,7 @@ window.gameLB = {
     // États : PLAY | DEAD | LEADERBOARD
     let state = 'PLAY';
     let score, speed, frame, carY, carVY, jumping, dblJumped, obstacles, nextObs;
+    let lastTime = 0;
 
     // ── CLASSEMENT (Firebase) ──
     let _lb = [];
@@ -2421,6 +2422,7 @@ window.gameLB = {
         carY = GROUND - CAR_BOTTOM; carVY = 0;
         jumping = false; dblJumped = false;
         obstacles = []; nextObs = 100;
+        lastTime = 0;
         cancelAnimationFrame(window._gameAnim);
         window._gameAnim = requestAnimationFrame(loop);
     }
@@ -2724,27 +2726,31 @@ window.gameLB = {
         return false;
     }
 
-    function loop() {
+    function loop(ts) {
+        // Delta time : normalise la vitesse quelle que soit la fréquence d'écran
+        const delta = lastTime ? Math.min((ts - lastTime) / 16.667, 3) : 1;
+        lastTime = ts;
+
         ctx.setTransform(_dpr, 0, 0, _dpr, 0, 0);
         ctx.clearRect(0, 0, W, H);
         drawBg();
         drawRoad();
 
         if (state === 'PLAY') {
-            frame++;
+            frame += delta;
             score = Math.floor(frame / 7);
             speed = 5 + Math.floor(score / 150) * 0.6;
 
             // Physics
-            carVY += GRAVITY;
-            carY  += carVY;
+            carVY += GRAVITY * delta;
+            carY  += carVY   * delta;
             if (carY >= GROUND - CAR_BOTTOM) {
                 carY = GROUND - CAR_BOTTOM; carVY = 0;
                 jumping = false; dblJumped = false;
             }
 
             // Spawn
-            nextObs--;
+            nextObs -= delta;
             if (nextObs <= 0) {
                 spawn();
                 // Espacement varié : parfois serré, parfois aéré, toujours sautable
@@ -2756,7 +2762,7 @@ window.gameLB = {
                 nextObs = Math.floor(minGap + extra);
             }
 
-            obstacles.forEach(o => o.x -= speed);
+            obstacles.forEach(o => o.x -= speed * delta);
             obstacles = obstacles.filter(o => o.x > -80);
 
             if (collides()) {

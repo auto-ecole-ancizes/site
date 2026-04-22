@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Mentions légales — Auto-École des Ancizes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+        --green:   #1d5c48;
+        --green-d: #0e2d22;
+        --orange:  #e8572a;
+        --bg:      #f0f4f2;
+        --text:    #162920;
+        --muted:   #5a7a6e;
+        --border:  #d8e8e0;
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    .ml-header {
+        background: var(--green-d);
+        padding: 28px 30px;
+        display: flex; align-items: center; justify-content: space-between;
+        flex-wrap: wrap; gap: 16px;
+    }
+
+    .ml-header-logo {
+        display: flex; align-items: center; gap: 14px;
+        text-decoration: none;
+    }
+
+    .ml-header-logo img {
+        width: 44px; height: 44px; border-radius: 10px; object-fit: cover;
+    }
+
+    .ml-header-logo span {
+        font-size: 15px; font-weight: 700; color: white;
+    }
+
+    .ml-header-back {
+        color: rgba(255,255,255,0.7);
+        font-size: 13px; text-decoration: none;
+        display: flex; align-items: center; gap: 7px;
+        transition: color 0.2s;
+    }
+
+    .ml-header-back:hover { color: white; }
+
+    /* ── CONTENT ── */
+    .ml-body {
+        max-width: 820px; margin: 0 auto;
+        padding: 52px 28px 80px;
+    }
+
+    .ml-page-title {
+        font-size: clamp(26px, 4vw, 38px);
+        font-weight: 800; color: var(--green-d);
+        margin-bottom: 8px;
+    }
+
+    .ml-updated {
+        font-size: 12px; color: var(--muted);
+        margin-bottom: 48px;
+        padding-bottom: 24px;
+        border-bottom: 2px solid var(--border);
+    }
+
+    .ml-section {
+        margin-bottom: 44px;
+    }
+
+    .ml-section h2 {
+        font-size: 16px; font-weight: 700;
+        color: var(--green);
+        margin-bottom: 18px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--border);
+        display: flex; align-items: center; gap: 10px;
+    }
+
+    .ml-section h2::before {
+        content: '';
+        width: 4px; height: 18px;
+        background: var(--orange);
+        border-radius: 2px;
+        flex-shrink: 0;
+    }
+
+    .ml-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+    }
+
+    .ml-table tr { border-bottom: 1px solid var(--border); }
+    .ml-table tr:last-child { border-bottom: none; }
+
+    .ml-table td {
+        padding: 11px 6px;
+        vertical-align: top;
+        line-height: 1.6;
+    }
+
+    .ml-table td:first-child {
+        font-weight: 600;
+        color: var(--muted);
+        width: 200px;
+        padding-right: 20px;
+        white-space: nowrap;
+    }
+
+    .ml-table a { color: var(--green); }
+
+    .ml-text {
+        font-size: 14px; color: #3a524a;
+        line-height: 1.85;
+    }
+
+    .ml-text + .ml-text { margin-top: 14px; }
+
+    /* ── FOOTER ── */
+    .ml-footer {
+        background: var(--green-d);
+        text-align: center;
+        padding: 24px;
+        font-size: 12px;
+        color: rgba(255,255,255,0.35);
+    }
+
+    @media (max-width: 520px) {
+        .ml-table td:first-child { width: 130px; font-size: 12px; }
+        .ml-table td { font-size: 13px; }
+    }
+    </style>
+</head>
+<body>
+
+<header class="ml-header">
+    <a href="index.html" class="ml-header-logo">
+        <img src="images/logo-nav.png" alt="Logo Auto-École des Ancizes">
+        <span>Auto-École des Ancizes</span>
+    </a>
+    <a href="index.html" class="ml-header-back">← Retour au site</a>
+</header>
+
+<div class="ml-body">
+    <h1 class="ml-page-title">Mentions légales</h1>
+    <p class="ml-updated">Conformément aux dispositions de la loi n° 2004-575 du 21 juin 2004 pour la confiance en l'économie numérique.</p>
+
+    <!-- 1. Éditeur -->
+    <div class="ml-section">
+        <h2>1. Éditeur du site</h2>
+        <table class="ml-table">
+            <tr><td>Nom de l'entreprise</td><td data-cms="mentions-company-name">Chamalières auto école</td></tr>
+            <tr><td>Forme juridique</td><td data-cms="mentions-legal-form">SARL AUTO ECOLE CLEM</td></tr>
+            <tr><td>Capital social</td><td data-cms="mentions-capital">1 000 €</td></tr>
+            <tr><td>Siège social</td><td data-cms="mentions-address">5 PLACE DE BEAULIEU, 63400 CHAMALIERES</td></tr>
+            <tr><td>Numéro SIRET</td><td data-cms="mentions-siret">849 203 328 000 18</td></tr>
+            <tr><td>N° TVA intracomm.</td><td data-cms="mentions-tva">FR56849203328</td></tr>
+            <tr><td>Téléphone</td><td data-cms="mentions-phone">0473398459</td></tr>
+            <tr><td>Email</td><td data-cms="mentions-email">autoecole.chamalieres@gmail.com</td></tr>
+            <tr><td>Directeur de publication</td><td data-cms="mentions-director">Mme ONDET Clémence</td></tr>
+        </table>
+    </div>
+
+    <!-- 2. Hébergement -->
+    <div class="ml-section">
+        <h2>2. Hébergement du site</h2>
+        <table class="ml-table">
+            <tr><td>Société</td><td data-cms="mentions-host-name">GitHub, Inc.</td></tr>
+            <tr><td>Adresse</td><td data-cms="mentions-host-address">88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis</td></tr>
+            <tr><td>Site internet</td><td><a data-cms="mentions-host-url" href="https://pages.github.com" target="_blank" rel="noopener">https://pages.github.com</a></td></tr>
+        </table>
+    </div>
+
+    <!-- 3. Propriété intellectuelle -->
+    <div class="ml-section">
+        <h2>3. Propriété intellectuelle</h2>
+        <p class="ml-text" data-cms="mentions-ip-text">L'ensemble du contenu du site (textes, images, graphismes, logo, etc.) est la propriété exclusive de l'Auto-École des Ancizes, sauf mention contraire. Toute reproduction, représentation, modification, publication, adaptation de tout ou partie des éléments du site est interdite, sauf autorisation écrite préalable.</p>
+    </div>
+
+    <!-- 4. Responsabilité -->
+    <div class="ml-section">
+        <h2>4. Responsabilité</h2>
+        <p class="ml-text" data-cms="mentions-resp-text">L'éditeur du site s'efforce de fournir des informations aussi précises que possible. Toutefois, il ne pourra être tenu responsable des omissions, inexactitudes ou carences dans la mise à jour. L'utilisateur du site reconnaît utiliser ces informations sous sa responsabilité exclusive.</p>
+    </div>
+
+    <!-- 5. Données personnelles -->
+    <div class="ml-section">
+        <h2>5. Données personnelles</h2>
+        <p class="ml-text" data-cms="mentions-data-text">Le traitement de vos données à caractère personnel est régi par notre Charte du respect de la vie privée, disponible depuis la section « Charte de Protection des Données Personnelles », conformément au Règlement Général sur la Protection des Données 2016/679 du 27 avril 2016 («RGPD»).</p>
+    </div>
+
+    <!-- 6. Droit applicable -->
+    <div class="ml-section">
+        <h2>6. Droit applicable</h2>
+        <p class="ml-text" data-cms="mentions-law-text">Le présent site est soumis au droit français. En cas de litige, les tribunaux compétents seront ceux du ressort du siège social de l'éditeur.</p>
+    </div>
+</div>
+
+<footer class="ml-footer">
+    © 2025 Auto-École des Ancizes. Tous droits réservés.
+</footer>
+
+<!-- Firebase CMS -->
+<script type="module">
+import { getApps, initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+
+const cfg = {
+    apiKey: "AIzaSyDOFlB2CxuOIzaawW-qS958zeuyDYadmMM",
+    authDomain: "auto-ecole-ancizes.firebaseapp.com",
+    projectId: "auto-ecole-ancizes",
+    storageBucket: "auto-ecole-ancizes.firebasestorage.app",
+    messagingSenderId: "733931346601",
+    appId: "1:733931346601:web:1300a311a6b8624920e7b8"
+};
+const app = getApps().length ? getApps()[0] : initializeApp(cfg);
+const db  = getFirestore(app);
+
+(async () => {
+    try {
+        const snap = await getDoc(doc(db, "site", "content"));
+        if (!snap.exists()) return;
+        const data = snap.data();
+        document.querySelectorAll('[data-cms]').forEach(el => {
+            const key = el.getAttribute('data-cms');
+            if (data[key] !== undefined) el.textContent = data[key];
+        });
+        // Lien hébergeur
+        const hostLink = document.querySelector('[data-cms="mentions-host-url"]');
+        if (hostLink && data['mentions-host-url']) {
+            hostLink.href = data['mentions-host-url'];
+        }
+    } catch(e) {}
+})();
+</script>
+
+</body>
+</html>

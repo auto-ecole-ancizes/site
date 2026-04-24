@@ -2418,7 +2418,7 @@ window.gameLB = {
 
     function reset() {
         state = 'PLAY';
-        score = 0; speed = 5; frame = 0;
+        score = 0; speed = 7; frame = 0;
         carY = GROUND - CAR_BOTTOM; carVY = 0;
         jumping = false; dblJumped = false;
         obstacles = []; nextObs = 100;
@@ -2450,14 +2450,22 @@ window.gameLB = {
 
     function spawn() {
         const type = TYPES[Math.floor(Math.random() * TYPES.length)];
-        let w, h;
+        let w, h, scale = 1;
         switch(type) {
-            case 'lapin':   w=20; h=32; break;
+            case 'lapin': {
+                scale = Math.random() < 0.35 ? 1.5 : 1; // 35% gros lapin
+                w = Math.round(20 * scale); h = Math.round(32 * scale);
+                break;
+            }
             case 'pothole': w=42; h=13; break;
-            case 'panneau': w=18; h=44; break;
-            case 'cone':    w=22; h=30; break;
+            case 'panneau': {
+                scale = Math.random() < 0.35 ? 1.5 : 1; // 35% grand panneau
+                w = Math.round(18 * scale); h = Math.round(44 * scale);
+                break;
+            }
+            case 'cone': w=22; h=30; break;
         }
-        obstacles.push({ type, x: W + 30, y: GROUND - h, w, h });
+        obstacles.push({ type, x: W + 30, y: GROUND - h, w, h, scale });
     }
 
     // ── PALETTE ──
@@ -2551,23 +2559,20 @@ window.gameLB = {
         switch(o.type) {
 
             case 'lapin': {
-                ctx.strokeStyle = '#1d5c48';
-                ctx.fillStyle   = '#1d5c48';
-                // Oreilles
-                ctx.lineWidth = 1.8;
-                // Oreilles (pleines)
-                ctx.beginPath(); ctx.ellipse(o.x+5,  o.y+4, 2.5, 7, -0.2, 0, Math.PI*2); ctx.fill();
-                ctx.beginPath(); ctx.ellipse(o.x+14, o.y+4, 2.5, 7,  0.2, 0, Math.PI*2); ctx.fill();
-                // Tête
-                ctx.beginPath(); ctx.arc(o.x+10, o.y+14, 7, 0, Math.PI*2); ctx.fill();
-                // Corps
-                ctx.beginPath(); ctx.ellipse(o.x+10, o.y+25, 8, 9, 0, 0, Math.PI*2); ctx.fill();
-                // Œil blanc
-                ctx.fillStyle = 'rgba(255,255,255,0.7)';
-                ctx.beginPath(); ctx.arc(o.x+13, o.y+12, 1.5, 0, Math.PI*2); ctx.fill();
+                const sc = o.scale || 1;
+                ctx.save();
+                ctx.translate(o.x, o.y);
+                ctx.scale(sc, sc);
                 ctx.fillStyle = '#1d5c48';
-                // Queue (petite)
-                ctx.beginPath(); ctx.arc(o.x+2, o.y+28, 3, 0, Math.PI*2); ctx.fill();
+                ctx.beginPath(); ctx.ellipse(5,  4, 2.5, 7, -0.2, 0, Math.PI*2); ctx.fill();
+                ctx.beginPath(); ctx.ellipse(14, 4, 2.5, 7,  0.2, 0, Math.PI*2); ctx.fill();
+                ctx.beginPath(); ctx.arc(10, 14, 7, 0, Math.PI*2); ctx.fill();
+                ctx.beginPath(); ctx.ellipse(10, 25, 8, 9, 0, 0, Math.PI*2); ctx.fill();
+                ctx.fillStyle = 'rgba(255,255,255,0.7)';
+                ctx.beginPath(); ctx.arc(13, 12, 1.5, 0, Math.PI*2); ctx.fill();
+                ctx.fillStyle = '#1d5c48';
+                ctx.beginPath(); ctx.arc(2, 28, 3, 0, Math.PI*2); ctx.fill();
+                ctx.restore();
                 break;
             }
 
@@ -2586,25 +2591,29 @@ window.gameLB = {
             }
 
             case 'panneau': {
+                const sc = o.scale || 1;
+                ctx.save();
+                ctx.translate(o.x, o.y);
+                ctx.scale(sc, sc);
                 ctx.strokeStyle = C_BORDEAUX;
                 ctx.fillStyle   = C_BORDEAUX;
                 ctx.lineWidth = 2;
                 ctx.beginPath();
-                ctx.moveTo(o.x+9, o.y+18);
-                ctx.lineTo(o.x+9, o.y+o.h);
+                ctx.moveTo(9, 18);
+                ctx.lineTo(9, 44);
                 ctx.stroke();
-                ctx.lineWidth = 2;
                 ctx.beginPath();
-                const pcx = o.x+9, pcy = o.y+10, pr = 9;
+                const pcx = 9, pcy = 10, pr = 9;
                 for(let i=0; i<8; i++){
                     const a = (i/8)*Math.PI*2 - Math.PI/8;
                     i===0 ? ctx.moveTo(pcx+pr*Math.cos(a), pcy+pr*Math.sin(a))
                            : ctx.lineTo(pcx+pr*Math.cos(a), pcy+pr*Math.sin(a));
                 }
                 ctx.closePath(); ctx.stroke();
-                ctx.font = 'bold 5px sans-serif';
+                ctx.font = `bold ${5}px sans-serif`;
                 ctx.textAlign = 'center';
                 ctx.fillText('STOP', pcx, pcy+2);
+                ctx.restore();
                 break;
             }
 
@@ -2740,7 +2749,7 @@ window.gameLB = {
             frame += delta;
             score = Math.floor(frame / 7);
             const _step = Math.floor(score / 150);
-            speed = Math.min(14, 5 + _step * (_step + 1) * 0.3);
+            speed = Math.min(16, 7 + _step * (_step + 1) * 0.35);
 
             // Physics
             carVY += GRAVITY * delta;
@@ -2754,12 +2763,11 @@ window.gameLB = {
             nextObs -= delta;
             if (nextObs <= 0) {
                 spawn();
-                // Espacement varié : parfois serré, parfois aéré, toujours sautable
-                const minGap = Math.max(55, 80 - Math.floor(score / 200) * 5);
+                const minGap = Math.max(38, 60 - Math.floor(score / 200) * 5);
                 const roll   = Math.random();
-                const extra  = roll < 0.25 ? 0              // 25% : serré
-                             : roll < 0.65 ? Math.random() * 80   // 40% : normal
-                             :               120 + Math.random() * 100; // 35% : large
+                const extra  = roll < 0.40 ? 0                    // 40% : serré
+                             : roll < 0.72 ? Math.random() * 55   // 32% : normal
+                             :               70 + Math.random() * 70; // 28% : large
                 nextObs = Math.floor(minGap + extra);
             }
 
